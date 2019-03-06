@@ -11,6 +11,7 @@
   "private": false,
   "scripts": {
     "build": "rollup -c",
+    "prebuild": "rm -rf dist",
     "watch": "rollup -cw"
   },
   "peerDependencies": {
