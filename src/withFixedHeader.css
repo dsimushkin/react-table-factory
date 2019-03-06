@@ -13,49 +13,50 @@
     box-sizing: border-box;
 }
     
-thead th, tbody tr:not(.inline-details) td {
+.scrollable-table thead th,
+.scrollable-table tbody tr:not(.inline-details) td {
     padding: var(--cell-padding);
     text-align: var(--v-align);
     height: var(--cell-height);
     background-color: var(--bg-color);
 }
 
-th {
+.scrollable-table th {
     font-size: var(--header-ft-size);
     background-color: var(--bg-color);
     position: relative;
 }
 
-tbody tr td,
-thead th {
+.scrollable-table tbody tr td,
+.scrollable-table thead th {
     border-bottom: 1px solid var(--border-color);
 }
 
-tbody tr:nth-child(even) td {
+.scrollable-table tbody tr:nth-child(even) td {
     background-color: var(--even-bg-color);
 }
 
-tbody [tabIndex] {
+.scrollable-table tbody [tabIndex] {
     cursor: pointer;
 }
 
-tbody [tabIndex]:focus {
+.scrollable-table tbody [tabIndex]:focus {
     outline: 2px auto #47d280;
 }
 
-tbody td {
+.scrollable-table tbody td {
     font-size: var(--cell-ft-size);
 }
 
-.scrollable-table-wrapper {
+.scrollable-table .scrollable-table-wrapper {
     padding: 0px 20px;
 }
 
-.adaptive-col-name {
+.scrollable-table .adaptive-col-name {
     display: none;
 }
 
-.scrollable-table-content {
+.scrollable-table .scrollable-table-content {
     position: absolute;
     left: 0;
     right: 0;
@@ -65,7 +66,7 @@ tbody td {
     top: var(--cell-height);
 }
 
-.scrollable-table-content table {
+.scrollable-table .scrollable-table-content table {
     margin-top: calc(var(--cell-height)*(-1));
     border-bottom: 2px solid var(--border-color);
 }

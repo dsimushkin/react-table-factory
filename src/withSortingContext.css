@@ -1,20 +1,20 @@
-.sorter,
-.sortable-column {
+.scrollable-table .sorter,
+.scrollable-table .sortable-column {
     cursor: pointer;
 }
 
-.sortable-column,
-[class*="sorted"] {
+.scrollable-table .sortable-column,
+.scrollable-table [class*="sorted"] {
     position: relative;
     padding-right: 30px !important;
 }
 
-.sortable-column:hover,
-[class*="sorted"].sortable-column {
+.scrollable-table .sortable-column:hover,
+.scrollable-table [class*="sorted"].sortable-column {
     text-decoration: underline;
 }
 
-th[class*="sorted"] .sort-image {
+.scrollable-table th[class*="sorted"] .sort-image {
     content: '';
     position: absolute;
     display: block;
@@ -30,11 +30,11 @@ th[class*="sorted"] .sort-image {
     transition: transform .3s ease-in-out;
 }
 
-th.sorted-desc .sort-image {
+.scrollable-table th.sorted-desc .sort-image {
     transform: rotate(-135deg);
 }
 
-thead th .sorter:hover,
-thead th:not(:hover) .sorter.sorted {
+.scrollable-table thead th .sorter:hover,
+.scrollable-table thead th:not(:hover) .sorter.sorted {
     text-decoration: underline;
 }
