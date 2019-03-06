@@ -34,7 +34,7 @@ export const Sorter = ({name, disabled=false, Component = 'span', className, ...
     if (className) classNames.push(className)
 
     if (!disabled) {
-        classNames.push('clickable');
+        classNames.push('sorter');
         const { parameter } = sortOrder;
         if (name === parameter) classNames.push('sorted')
     }

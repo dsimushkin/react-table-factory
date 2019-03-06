@@ -1,3 +1,4 @@
+.sorter,
 .sortable-column {
     cursor: pointer;
 }
@@ -18,7 +19,7 @@ th[class*="sorted"] .sort-image {
     position: absolute;
     display: block;
     right: 12px;
-    top: calc(50% + 1px);
+    top: calc(50% - 2px);
     border-style: solid;
     border-width: 1px 0px 0px 1px;
     border-color: #000;
@@ -27,15 +28,13 @@ th[class*="sorted"] .sort-image {
     transform: rotate(45deg);
     transform-origin: 50% 50%;
     transition: transform .3s ease-in-out;
-
 }
 
 th.sorted-desc .sort-image {
     transform: rotate(-135deg);
-    top: calc(50% - 1px);
 }
 
-thead th .clickable:hover,
-thead th:not(:hover) .clickable.sorted {
+thead th .sorter:hover,
+thead th:not(:hover) .sorter.sorted {
     text-decoration: underline;
 }

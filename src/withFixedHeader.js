@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useLayoutEffect, useImperativeHandle } from 'react';
 
-import { DefaultHeaderRenderer, table } from './index';
+import { DefaultHeaderRenderer, table } from './table';
 
 const cloneStyles = (
     node,
@@ -135,6 +135,10 @@ export const withFixedHeader = ({
                     false,
                     'width',
                 );
+
+                const headHeight = tableRef.current.head.current.clientHeight;
+                tableRef.current.table.current.style.marginTop = `-${headHeight}px`;
+                scrollContainer.current.style.top = `${headHeight}px`;
                 
                 cloneStyles(
                     tableRef.current.head.current,

@@ -7,7 +7,7 @@ import pkg from './package.json'
 
 // simple file copy plugin
 const copyPlugin = ({src, targ}) => ({
-    ongenerate() {
+    generateBundle() {
         if (fs.existsSync(src))
         {
             const targDir = path.dirname(targ);
@@ -18,17 +18,24 @@ const copyPlugin = ({src, targ}) => ({
 })
 
 const exports = fs.readdirSync('./src')
-.filter(file => /\.(js)$/.test(file))
+.filter(file => /\.js$/.test(file))
 .map((file) => ({
     input: `src/${file}`,
-    output: [{
-        format: 'cjs',
-        file: `dist/${file}`,
-    }],
-    external: [
-        ...Object.keys(pkg.peerDependencies || {}),
-        ...Object.keys(pkg.dependencies || {}),
+    output: [
+        {
+            format: 'cjs',
+            file: `dist/${file}`,
+        },
+        // {
+        //     format: 'umd',
+        //     name: file.replace(/\.js$/, ''),
+        //     file: `dist/${file}`,
+        //     globals: {
+        //       react: 'React',
+        //     },
+        // }
     ],
+    external: Object.keys(pkg.peerDependencies || {}),
     plugins: [
         resolve(),
         babel({

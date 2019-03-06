@@ -1,6 +1,6 @@
 import React, { forwardRef, useContext } from 'react';
 
-import { table, DefaultHeaderCellContentRenderer, DefaultHeaderCellRenderer } from './index';
+import { table, DefaultHeaderCellContentRenderer, DefaultHeaderCellRenderer } from './table';
 
 /**
  * Wrapper

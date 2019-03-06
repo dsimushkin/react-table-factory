@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 
-import { table } from './index';
+import { table } from './table';
 import { useTotalScroll } from './hooks/useTotalScroll';
 
 /**

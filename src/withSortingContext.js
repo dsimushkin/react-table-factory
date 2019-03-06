@@ -1,7 +1,9 @@
 import React, { forwardRef, useContext } from 'react';
 
-import { table, Column, DefaultHeaderCellRenderer, DefaultHeaderCellContentRenderer } from './index';
+import { table, Column, DefaultHeaderCellRenderer, DefaultHeaderCellContentRenderer } from './table';
 import { SortableContext, sortParameterFactory, sortableContext, controlledSortableContext } from './hocs/sortableHoc';
+
+export { Sorter } from './hocs/sortableHoc';
 
 /**
  * Table headerCellRenderer decorator HoC.
@@ -16,7 +18,7 @@ const sortableHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => forwardRe
     const classNames = [];
 
     if (className) classNames.push(className);
-    if (sortable) classNames.push('sortable-column');
+    if (sortable && name != null) classNames.push('sortable-column');
 
     if (name != null && name === parameter) {
         classNames.push(`sorted-${direction.toLowerCase()}`);
@@ -27,6 +29,7 @@ const sortableHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => forwardRe
             ref={ref}
             className={classNames.join(" ")}
             onClick={sortable ? () => sort(name) : undefined}
+            name={name}
             {...props}
         />
     )

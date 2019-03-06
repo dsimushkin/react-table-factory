@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { table, DefaultHeaderCellRenderer, DefaultCellRenderer } from './index';
+import { table, DefaultHeaderCellRenderer, DefaultCellRenderer } from './table';
 
 export const Controll = () => null;
 

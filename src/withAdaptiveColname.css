@@ -1,0 +1,59 @@
+@media all and (max-width: 640px) {
+    thead,
+    tfoot,
+    .scrollable-fake-table {
+        display: none;
+    }
+
+    tbody tr {
+        display: block;
+        border-color: var(--border-color);
+        border-style: solid;
+        border-width: 1px 1px 0px 1px;
+    }
+    
+    tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bg-color) !important;
+    }
+
+    tbody tr:not(:last-child):not(.selected-row) {
+        margin-bottom: 30px;
+    }
+
+    tbody td > :last-child:not(:first-child) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    tbody :not(.inline-details) td > * {
+        flex: 1;
+        text-align: right;
+    }
+
+    tbody :not(.inline-details) td > .adaptive-col-name {
+        display: block;
+        text-align: left;
+    }
+
+    .scrollable-table-content {
+        top: 20px;
+    }
+
+    .scrollable-table-content table {
+        margin-top: 0;
+        border: 0;
+    }
+    
+    .scrollable-table-wrapper {
+        padding: 0 20px 0 8px;
+    }
+
+    .scrollable-table-content {
+        top: 8px;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useContext, forwardRef, useEffect } from 'react';
 
-import { table, DefaultDataRowRenderer } from './index';
+import { table, DefaultDataRowRenderer } from './table';
 import { selectionContext, SelectionContext } from './hocs/withSelection';
 
 /**
