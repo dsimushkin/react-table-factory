@@ -30,13 +30,9 @@ const exports = fs.readdirSync('./src')
         ...Object.keys(pkg.dependencies || {}),
     ],
     plugins: [
+        resolve(),
         babel({
             exclude: "node_modules/**"
-        }),
-        resolve({
-            customResolveOptions: {
-                moduleDirectory: 'node_modules'
-            }
         }),
         copyPlugin({
             src: `./src/${file.replace(/\.js$/, '.css')}`,
