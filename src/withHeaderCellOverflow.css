@@ -1,0 +1,48 @@
+.header-wrapper {
+    text-align: left;
+    width: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    align-items: center;
+}
+
+.header-wrapper .header-positioner {
+    flex: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: var(--cell-padding);
+}
+
+.header-wrapper .header-positioner > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.header-wrapper .header-positioner:hover {
+    width: auto;
+    overflow: visible;
+    background-color: #fff;
+    z-index: 1;
+    position: relative;
+}
+
+.header-wrapper .header-positioner:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1px;
+    right: -1px;
+    bottom: 0;
+    display: block;
+    border: 0px solid #e7e9eb;
+    border-width: 0px 1px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px #e7e9eb;
+    z-index: -1;
+}
