@@ -24,7 +24,6 @@ const exports = fs.readdirSync('./src')
     output: [{
         format: 'cjs',
         file: `dist/${file}`,
-        // assetFileNames: file.replace(/\.js$/, '.css')
     }],
     external: [
         ...Object.keys(pkg.peerDependencies || {}),
@@ -32,9 +31,13 @@ const exports = fs.readdirSync('./src')
     ],
     plugins: [
         babel({
-        exclude: "node_modules/**"
+            exclude: "node_modules/**"
         }),
-        resolve(),
+        resolve({
+            customResolveOptions: {
+                moduleDirectory: 'node_modules'
+            }
+        }),
         copyPlugin({
             src: `./src/${file.replace(/\.js$/, '.css')}`,
             targ: `./dist/${file.replace(/\.js$/, '.css')}`
