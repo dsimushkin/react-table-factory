@@ -12,7 +12,7 @@ import { useTotalScroll } from './hooks/useTotalScroll';
  */
 export const withLazyLoading = ({
     Loading=() => 'Loading',
-    threshold=5
+    threshold=50
 }) => (tableFactory=table) => (options) => {
     const Table = tableFactory(options);
 

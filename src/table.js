@@ -106,12 +106,12 @@ export const DefaultDataRowRenderer = forwardRef(({
 ))
 
 export const table = ({
-    rowRenderer,
-    cellRenderer,
+    rowRenderer=DefaultRowRenderer,
+    cellRenderer=DefaultCellRenderer,
     dataRowRenderer: Row=DefaultDataRowRenderer,
     dataCellRenderer=DefaultDataCellRenderer,
-    headerCellRenderer,
-    headerCellContentRenderer,
+    headerCellRenderer=DefaultHeaderCellRenderer,
+    headerCellContentRenderer=DefaultHeaderCellContentRenderer,
     headerRenderer: Header=DefaultHeaderRenderer,
 }={}) => forwardRef(({
     children, data=[], // arbitrary

@@ -69,4 +69,5 @@
 .scrollable-table .scrollable-table-content table {
     margin-top: calc(var(--cell-height)*(-1));
     border-bottom: 2px solid var(--border-color);
+    width: 100%;
 }

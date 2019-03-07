@@ -84,7 +84,7 @@ export const DetailsContext = React.createContext({
  * @param {*} selectionReducer -- a reducer used by SelectionContext. 
  */
 export const withInlineDetailsContext = (
-    selectionReducer
+    selectionReducer=singeSelectionReducer
 ) => (tableFactory=table) => ({
     dataRowRenderer,
     ...props
