@@ -57,10 +57,7 @@
 }
 
 .scrollable-table .scrollable-table-content {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
     overflow-y: auto;
     -webkit-overflow-scrolling: auto;
     top: var(--cell-height);

@@ -1,7 +1,7 @@
 import React, { useContext, forwardRef, useEffect } from 'react';
 
 import { table, DefaultDataRowRenderer } from './table';
-import { selectionContext, SelectionContext } from './hocs/withSelection';
+import { selectionContext, SelectionContext, singleSelectionReducer } from './hocs/withSelection';
 
 /**
  * Table dataRowRenderer decorator HoC.
@@ -84,7 +84,7 @@ export const DetailsContext = React.createContext({
  * @param {*} selectionReducer -- a reducer used by SelectionContext. 
  */
 export const withInlineDetailsContext = (
-    selectionReducer=singeSelectionReducer
+    selectionReducer=singleSelectionReducer
 ) => (tableFactory=table) => ({
     dataRowRenderer,
     ...props

@@ -39,7 +39,7 @@ export const multiSelectionReducer = selectionReducerFactory((state, value) => (
     value != null ? state.concat(value) : state
 ));
 
-export const singeSelectionReducer = selectionReducerFactory((state, value) => (
+export const singleSelectionReducer = selectionReducerFactory((state, value) => (
     value != null ? [value] : state
 ));
 

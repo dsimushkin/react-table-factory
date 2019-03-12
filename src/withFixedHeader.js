@@ -166,7 +166,7 @@ export const withFixedHeader = ({
                         </div>
                     </div>
                 </div>
-                <div className="scrollable-table-wrapper" style={{position: 'relative'}}>
+                <div className="scrollable-table-wrapper" style={{position: 'absolute', top: 0}}>
                     <FakeTable
                         ref={clone}
                         {...props}
