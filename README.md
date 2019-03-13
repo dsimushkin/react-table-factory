@@ -55,7 +55,7 @@ A set of decorators around table factory.
 Some components can use css. Corresponding files should have the same base name. (i.e withFixedHeader.css).
 
 | name (css) (remarks) | options(=defaults) | Table:Column props | description |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | `withFixedHeader` (true) ||| Creates 2 Tables to implement a fixed header and a scrollable table content. Since it creates 2 tables, any decorators with context wrappers around table should NOT be wrapped by this component. |
 | `withInlineDetailsContext` (false) | {`selectionReducer`} | {`detailsRenderer`}:{} | Wraps Table with `selectionContext`. Implemented `selectionReducer`s are `singeSelectionReducer` and `multiSelectionReducer`. |
 | `withLazyLoading` (false) | {`Loading` = ()=>'Loading', `threshold`=50} | {`fetch`, `fetching`}:{} | Decorator around `withFixedHeader` table decorator. When fetching prop is set to true, show `Loading` component after table contents. When the container is scrolled to bottom (taking `threshold` into account) `fetch` is called. |
