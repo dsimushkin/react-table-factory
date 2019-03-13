@@ -146,6 +146,12 @@ export const withFixedHeader = (tableFactory=table) => ({
                 );
             });
         }
+
+        useLayoutEffect(
+            () => {
+                layout();
+            }
+        )
     
         return (
             <Context.Provider value={{layout}}>

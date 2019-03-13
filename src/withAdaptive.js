@@ -38,9 +38,9 @@ export const DefaultAdaptiveComponent = ({header: Header, name, onClick, ...prop
     </span>
 );
 
-export const withAdaptive = (
+export const withAdaptive = ({
     Component=DefaultAdaptiveComponent
-) => (tableFactory=table) => ({
+}={}) => (tableFactory=table) => ({
     dataCellRenderer,
     ...options
 }={}) => {
