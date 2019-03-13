@@ -3,10 +3,10 @@
     cursor: pointer;
 }
 
-.scrollable-table .sortable-column,
-.scrollable-table [class*="sorted"] {
+.scrollable-table thead th.sortable-column,
+.scrollable-table thead th[class*="sorted"] {
     position: relative;
-    padding-right: 30px !important;
+    padding-right: 30px;
 }
 
 .scrollable-table .sortable-column:hover,

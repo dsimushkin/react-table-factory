@@ -43,17 +43,21 @@ export const DefaultHeaderCellRenderer = forwardRef(({
     name,
     cell,
     tableProps,
+    children,
     ...props
-}, ref) => (
-    <th ref={ref} {...props}>
-        <HeaderCell
-            tableProps={tableProps}
-            name={name}
-            cell={cell}
-            header={header}
-        />
-    </th>
-))
+}, ref) => {
+    return (
+        <th ref={ref} {...props}>
+            <HeaderCell
+                tableProps={tableProps}
+                name={name}
+                cell={cell}
+                header={header}
+            />
+            {children}
+        </th>
+    )
+})
 
 export const DefaultHeaderRenderer = forwardRef(({
     columns,

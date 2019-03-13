@@ -1,0 +1,27 @@
+@import '~react-table-factory/dist/withFixedHeader';
+@import '~react-table-factory/dist/withHeaderCellOverflow';
+@import '~react-table-factory/dist/withSortingContext';
+
+.scrollable-table .adaptive-col-name {
+    display: none;
+}
+
+@media all and (max-width: 940px) {
+    @import '~react-table-factory/dist/withAdaptive';
+
+    .scrollable-table {
+        @extend .adaptive-table;
+    }
+
+    .scrollable-table {
+        .multi-line {
+            display: inline-flex;
+            justify-content: flex-end;
+            
+            div + div::before  {
+                content: ',';
+                margin-right: 5px;
+            }
+        }
+    }
+}

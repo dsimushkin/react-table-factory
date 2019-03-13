@@ -3,25 +3,22 @@ import React, { useState } from 'react';
 import './App.css';
 
 // import the styles
-import 'react-table-factory/dist/withFixedHeader.css';
-import 'react-table-factory/dist/withAdaptiveColname.css';
-import 'react-table-factory/dist/withHeaderCellOverflow.css';
-import 'react-table-factory/dist/withSortingContext.css';
+import './Table.scss';
 
 // import table factory decorators
 import { composeDecorators, Column } from 'react-table-factory';
 import { withHeaderCellOverflow } from 'react-table-factory';
-import { withAdaptiveColname } from 'react-table-factory';
+import { withAdaptive } from 'react-table-factory';
 import { withInMemorySortingContext, Sorter } from 'react-table-factory';
 import { withInlineDetailsContext } from 'react-table-factory';
 import { withFixedHeader } from 'react-table-factory';
 
 const Table = composeDecorators(
   withHeaderCellOverflow,
-  withAdaptiveColname(),
+  withAdaptive(),
   withInMemorySortingContext({defaultDirection: 'desc'}),
   withInlineDetailsContext(),
-  withFixedHeader() // should be last
+  withFixedHeader // should be last
 )()
 
 // mock data
@@ -72,20 +69,21 @@ const columns = [
       name: ['data5', 'data6'],
       header: ({disabled}) => (
         <React.Fragment>
-          <span>With multisort</span>
-          <Sorter name="data5" disabled={disabled} Component="div">
+          <div>With multisort</div>
+          <Sorter name="data5" disabled={disabled} Component="span">
             Data 5
           </Sorter>
-          <Sorter name="data6" disabled={disabled} Component="div">
+          ,
+          <Sorter name="data6" disabled={disabled} Component="span">
             Data 6
           </Sorter>
         </React.Fragment>
       ),
       cell: ({data}) => (
-        <React.Fragment>
+        <div className="multi-line">
           <div>{data.data5}</div>
           <div>{data['data6']}</div>
-        </React.Fragment>
+        </div>
       ),
       style: {width: '30%'},
   },
@@ -115,10 +113,9 @@ const App = () => {
       <main>
         <Table
           data={data}
-          className="scrollable-table"
+          className="default-theme"
           defaultSortParameter="data1"
           defaultSortDirection="asc"
-          style={{width: '100%', height: 500}}
           detailsRenderer={InlineDetails}
         >
             { columns.map((props, i) => (

@@ -1,6 +1,6 @@
-import React, { forwardRef, useRef, useLayoutEffect, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useLayoutEffect, useImperativeHandle, useContext } from 'react';
 
-import { DefaultHeaderRenderer, table } from './table';
+import { table, DefaultHeaderRenderer, DefaultHeaderCellRenderer } from './table';
 
 const cloneStyles = (
     node,
@@ -14,11 +14,11 @@ const cloneStyles = (
         dest.style[prop] = getComputedStyle(node)[prop];
         callback(dest, node);
     }
-
+    
     if (recursively) {
-        const nodeChildren = node.getElementsByTagName(selector);
+        const nodeChildren = node.querySelectorAll(selector);
         if (nodeChildren.length) {
-            const destChildren = dest.getElementsByTagName(selector);
+            const destChildren = dest.querySelectorAll(selector);
             for (let i = 0, length = nodeChildren.length; i < length; i++) {
                 cloneStyles(nodeChildren[i], destChildren[i], true, prop, selector, callback);
             }
@@ -27,53 +27,51 @@ const cloneStyles = (
 }
 
 /**
- * injects additional styles into header component
+ * An iframe watcher of for element resize
+ * Parent element should have position: relative
+ * 
+ * @param {*} - {onResize}
  */
-const hideHeaderRenderer = (HeaderRenderer) => (
-    forwardRef(({style={}, ...props}, ref) => (
-        <HeaderRenderer
+export const ResizeTrigger = ({onResize}) => {
+    const ref = useRef();
+    useLayoutEffect(
+        () => {
+            ref.current.contentWindow.addEventListener('resize', onResize);
+
+            return () => {
+                ref.current.contentWindow.removeEventListener('resize', onResize);
+            }
+        }
+    )
+
+    return (
+        <iframe
+            width="100%"
+            height="100%"
+            style={{position: 'absolute', top: 0, left: 0}}
             ref={ref}
-            style={{...style, visibility: 'hidden', border: '0'}}
-            {...props}
         />
-    ))
+    )
+}
+
+const addResizeTrigger = (Cell=DefaultHeaderCellRenderer) => (
+    forwardRef(({children, ...props}, ref) => {
+        const { layout } = useContext(Context);
+        return (
+            <Cell
+                {...props}
+                children={children}
+                ref={ref}
+            >
+                <ResizeTrigger onResize={layout}/>
+            </Cell>
+        )
+    })
 )
 
-/**
- * Continuous monitor based on requestAnimationFrame
- * 
- * @param {*} callback 
- */
-export const rafMonitorFactory = (callback) => () => {
-    let raf;
-    const loop = () => {
-        callback();
-        raf = requestAnimationFrame(loop);
-    }
-
-    loop();
-
-    return () => {
-        cancelAnimationFrame(raf);
-    }
-}
-
-/**
- * Window resize based monitor.
- * If some inner component is rendered on it's own
- * call window.dispatchEvent(new Event('resize'))
- * after component render.
- * 
- * @param {*} callback 
- */
-export const windowMonitorFactory = (callback) => () => {
-    callback();
-    window.addEventListener('resize', callback, true);
-
-    return () => {
-        window.removeEventListener('resize', callback, true)
-    }
-}
+const Context = React.createContext({
+    layout: () => {}
+})
 
 /**
  * HoC factory to generate a table with fixed header.
@@ -93,25 +91,23 @@ export const windowMonitorFactory = (callback) => () => {
  * @param {*} TableComponent 
  * @param {*} monitorFactory 
  */
-export const withFixedHeader = ({
-    monitorFactory=windowMonitorFactory
-}={}) => (tableFactory=table) => ({
-    headerRenderer: Header=DefaultHeaderRenderer,
+export const withFixedHeader = (tableFactory=table) => ({
+    headerCellRenderer=DefaultHeaderCellRenderer,
     ...options
 }={}) => {
     const Table = tableFactory({
-        headerRenderer: hideHeaderRenderer(Header),
+        headerCellRenderer: addResizeTrigger(headerCellRenderer),
         ...options
     });
 
     const FakeTable = tableFactory({
-        headerRenderer: Header,
+        headerCellRenderer,
         ...options
     })
 
     return forwardRef(({
         children, data, // arbitrary
-        style={}, className,
+        style={}, className='',
         onScroll,
         ...props
     }, ref) => {
@@ -124,9 +120,9 @@ export const withFixedHeader = ({
             scrollContainer: scrollContainer.current,
             head: tableRef.current.head
         }));
-        
+
         let t;
-        useLayoutEffect(monitorFactory(() => {
+        const layout = () => {
             cancelAnimationFrame(t);
             t = requestAnimationFrame(() => {
                 cloneStyles(
@@ -139,6 +135,7 @@ export const withFixedHeader = ({
                 const headHeight = tableRef.current.head.current.clientHeight;
                 tableRef.current.table.current.style.marginTop = `-${headHeight}px`;
                 scrollContainer.current.style.top = `${headHeight}px`;
+                scrollContainer.current.style.height = `calc(100% - ${headHeight}px)`;
                 
                 cloneStyles(
                     tableRef.current.head.current,
@@ -148,33 +145,42 @@ export const withFixedHeader = ({
                     'th',
                 );
             });
-        }))
+        }
     
         return (
-            <div style={{...style, position: 'relative'}} className={className}>
-                <div className="scrollable-table-content" ref={scrollContainer} onScroll={onScroll}>
-                    <div className="scrollable-table-wrapper">
-                        <div className="table-wrapper">
-                            <Table
-                                data={data}
-                                ref={tableRef}
-                                {...props}
-                            >
-                            { children }
-                            </Table>
-                            { children }
+            <Context.Provider value={{layout}}>
+                <div
+                    style={{...style, position: 'relative'}}
+                    className={`scrollable-table ${className}`}
+                >
+                    <div
+                        className="scrollable-table-content"
+                        ref={scrollContainer}
+                        onScroll={onScroll}
+                    >
+                        <div className="scrollable-table-wrapper">
+                            <div className="table-wrapper">
+                                <Table
+                                    data={data}
+                                    ref={tableRef}
+                                    {...props}
+                                >
+                                { children }
+                                </Table>
+                                { children }
+                            </div>
                         </div>
                     </div>
+                    <div className="scrollable-table-wrapper" style={{position: 'absolute', top: 0}}>
+                        <FakeTable
+                            ref={clone}
+                            {...props}
+                        >
+                            {children}
+                        </FakeTable>
+                    </div>
                 </div>
-                <div className="scrollable-table-wrapper" style={{position: 'absolute', top: 0}}>
-                    <FakeTable
-                        ref={clone}
-                        {...props}
-                    >
-                        {children}
-                    </FakeTable>
-                </div>
-            </div>
+            </Context.Provider>
         )
     })
 }

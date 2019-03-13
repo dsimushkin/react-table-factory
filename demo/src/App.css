@@ -1,5 +1,17 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+  flex: none;
+}
+
+main {
+  flex: 1 1 100%;
+  overflow: hidden;
 }
 
 .App-logo {

@@ -1,5 +1,5 @@
 export * from './table';
-export * from './withAdaptiveColname';
+export * from './withAdaptive';
 export * from './withFixedHeader';
 export * from './withHeaderCellOverflow';
 export * from './withHeaderControl';

@@ -1,0 +1,54 @@
+.adaptive-table table {
+    table-layout: auto !important;
+}
+
+.adaptive-table thead,
+.adaptive-table tfoot,
+.adaptive-table .scrollable-fake-table {
+    display: none;
+}
+
+.adaptive-table tbody tr {
+    display: block;
+    border-color: var(--border-color);
+    border-style: solid;
+    border-width: 1px 1px 0px 1px;
+}
+
+.adaptive-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color) !important;
+}
+
+.adaptive-table tbody tr:not(:last-child):not(.selected-row) {
+    margin-bottom: 30px;
+}
+
+.adaptive-table tbody :not(.inline-details) td > * {
+    flex: auto;
+    text-align: right;
+}
+
+.adaptive-table tbody :not(.inline-details) td > .adaptive-col-name {
+    display: block;
+    text-align: left;
+}
+
+.adaptive-table .scrollable-table-content {
+    top: 20px !important;
+}
+
+.adaptive-table .scrollable-table-content table {
+    margin-top: 0 !important;
+    border: 0;
+}
+
+.adaptive-table .scrollable-table-wrapper {
+    padding: 0 20px 0 8px;
+}
+
+.adaptive-table .scrollable-table-content {
+    top: 8px;
+}

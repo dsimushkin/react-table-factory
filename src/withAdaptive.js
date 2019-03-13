@@ -30,14 +30,16 @@ const withColname = (Cell=DefaultDataCellRenderer, Component) => {
     return WithAdaptiveColname;
 }
 
-export const withAdaptiveColname = (
-    Component=({header: Header, name, onClick, ...props}) => (
-        <span className="adaptive-col-name">
-            { Header ? (
-                <Header {...props} name={name} disabled />
-            ) : name || null }
-        </span>
-    )
+export const DefaultAdaptiveComponent = ({header: Header, name, onClick, ...props}) => (
+    <span className="adaptive-col-name">
+        { Header ? (
+            <Header {...props} name={name} disabled />
+        ) : name || null }
+    </span>
+);
+
+export const withAdaptive = (
+    Component=DefaultAdaptiveComponent
 ) => (tableFactory=table) => ({
     dataCellRenderer,
     ...options
