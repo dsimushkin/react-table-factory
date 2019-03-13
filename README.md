@@ -56,7 +56,7 @@ Some components can use css. Corresponding files should have the same base name.
 
 | name (css) (remarks) | options(=defaults) | Table props | Column props | description |
 | --- | --- | --- | --- | --- |
-| `withFixedHeader` (true) | {`monitor` = `windowMonitorFactory`} | | | Creates 2 Tables to implement a fixed header and a scrollable table content. Since it creates 2 tables, any decorators with context wrappers around table should NOT be wrapped by this component. |
+| `withFixedHeader` (true) |||| Creates 2 Tables to implement a fixed header and a scrollable table content. Since it creates 2 tables, any decorators with context wrappers around table should NOT be wrapped by this component. |
 | `withInlineDetailsContext` (false) | `selectionReducer` = `singeSelectionReducer` | {`detailsRenderer`} | | Wraps Table with `selectionContext`. Implemented `selectionReducer`s are `singeSelectionReducer` and `multiSelectionReducer`. |
 | `withLazyLoading` (false) | {`Loading` = ()=>'Loading', `threshold`=50} | {`fetch`, `fetching`} | | Decorator around `withFixedHeader` table decorator. When fetching prop is set to true, show `Loading` component after table contents. When the container is scrolled to bottom (taking `threshold` into account) `fetch` is called. |
 | `withSortingContext` (true) | {`defaultDirection`, `sortFactory`, `inMemory` = false, `sortableContextHoc` = `controlledSortableContext`} | {`onSort`, `sortDirection`='asc', `sortParameter`} | {`sortable`,`name`} | Wraps Table with `SortableContext`. Provides a `Sorter` Component to implement custom sorting elements. If a `name` `Column` prop is an array, the one from Table props will be used, otherwise the first elem will be used. |
