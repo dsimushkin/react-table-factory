@@ -12,7 +12,10 @@
   "scripts": {
     "build": "rollup -c",
     "prebuild": "rm -rf dist",
-    "watch": "rollup -cw"
+    "watch": "rollup -cw",
+    "prewatch": "yarn prebuild",
+    "prepare": "yarn build",
+    "postpublish": "(cd demo && yarn deploy)"
   },
   "peerDependencies": {
     "react": "^16.8.0"
