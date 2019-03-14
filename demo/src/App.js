@@ -6,12 +6,14 @@ import './App.css';
 import './Table.scss';
 
 // import table factory decorators
-import { composeDecorators, Column } from 'react-table-factory';
-import { withHeaderCellOverflow } from 'react-table-factory';
-import { withAdaptive } from 'react-table-factory';
-import { withInMemorySortingContext, Sorter } from 'react-table-factory';
-import { withInlineDetailsContext } from 'react-table-factory';
-import { withFixedHeader } from 'react-table-factory';
+import { 
+  composeDecorators,
+  withHeaderCellOverflow,
+  withAdaptive,
+  withInMemorySortingContext, Sorter,
+  withInlineDetailsContext,
+  withFixedHeader
+} from 'react-table-factory';
 
 const Table = composeDecorators(
   withHeaderCellOverflow,
@@ -117,11 +119,8 @@ const App = () => {
           defaultSortParameter="data1"
           defaultSortDirection="asc"
           detailsRenderer={InlineDetails}
-        >
-            { columns.map((props, i) => (
-                <Column key={i} {...props} />
-            )) }
-        </Table>
+          columns={columns}
+        />
       </main>
     </div>
   );

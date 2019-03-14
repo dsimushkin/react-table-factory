@@ -1,7 +1,5 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 
-export const Column = ({header, cell, name}) => null;
-
 export const DefaultRowRenderer = forwardRef((props, ref) => (
     <tr {...props} ref={ref} />
 ))
@@ -118,7 +116,8 @@ export const table = ({
     headerCellContentRenderer=DefaultHeaderCellContentRenderer,
     headerRenderer: Header=DefaultHeaderRenderer,
 }={}) => forwardRef(({
-    children, data=[], // arbitrary
+    children, // remove children
+    data=[], columns=[], // arbitrary
     style={}, className, // styles
     ...props
 }, ref) => {
@@ -129,9 +128,6 @@ export const table = ({
         table: tableRef,
         head: headRef
     }));
-
-    // generate columns props array
-    const columns = React.Children.toArray(children).filter(({type}) => type === Column).map(({props}) => props);
 
     return (
         <table

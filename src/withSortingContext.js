@@ -1,6 +1,6 @@
 import React, { forwardRef, useContext } from 'react';
 
-import { table, Column, DefaultHeaderCellRenderer, DefaultHeaderCellContentRenderer } from './table';
+import { table, DefaultHeaderCellRenderer, DefaultHeaderCellContentRenderer } from './table';
 import { SortableContext, sortParameterFactory, sortableContext, controlledSortableContext } from './hocs/sortableHoc';
 
 export { Sorter } from './hocs/sortableHoc';
@@ -107,24 +107,18 @@ export const withSortingContext = ({
     })
 
     return (
-        sortableContextHoc(forwardRef(({children, ...props}, ref) => {
+        sortableContextHoc(forwardRef(({columns=[], ...props}, ref) => {
             const {sortOrder} = useContext(SortableContext);
-            const columns = React.Children.toArray(children).filter(({type}) => type === Column).map(({props}) => props);
             
             return (
                 <Table
                     ref={ref}
+                    columns={columns.map(({name, ...props}) => ({
+                        name: Array.isArray(name) ? sortParameterFactory(sortOrder)(...name) : name,
+                        ...props
+                    }))}
                     {...props}
-                >
-                    { columns.map(({name, ...props}, i) => (
-                        <Column
-                            key={i}
-                            name={Array.isArray(name) ? sortParameterFactory(sortOrder)(...name) : name}
-                            {...props}
-                        />
-                    ))}
-                    { React.Children.toArray(children).filter(({type}) => type !== Column) }
-                </Table>
+                />
             )
         }), {defaultDirection, sortFactory, inMemory})
     )

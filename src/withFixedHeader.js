@@ -81,8 +81,7 @@ const Context = React.createContext({
  * 
  * Adds scrollable container to the table generated ref.
  * 
- * If some of children are not of type Column,
- * they will be rendered immediately after the table.
+ * Children will be rendered immediately after the table.
  * 
  * !IMPORTANT!
  * Since this decorator is creating multiple tables it

@@ -4,14 +4,15 @@
   "description": "React table factory HoC with a set of wrapper HoCs",
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "styles"
   ],
   "author": "Simushkin Dmitry",
   "license": "MIT",
   "private": false,
   "scripts": {
     "build": "rollup -c",
-    "prebuild": "rm -rf dist",
+    "prebuild": "rm -rf dist && rm -rf styles",
     "watch": "rollup -cw",
     "prewatch": "yarn prebuild",
     "prepare": "yarn build",

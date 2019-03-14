@@ -1,13 +1,13 @@
-@import '~react-table-factory/dist/withFixedHeader';
-@import '~react-table-factory/dist/withHeaderCellOverflow';
-@import '~react-table-factory/dist/withSortingContext';
+@import '~react-table-factory/styles/withFixedHeader';
+@import '~react-table-factory/styles/withHeaderCellOverflow';
+@import '~react-table-factory/styles/withSortingContext';
 
 .scrollable-table .adaptive-col-name {
     display: none;
 }
 
 @media all and (max-width: 940px) {
-    @import '~react-table-factory/dist/withAdaptive';
+    @import '~react-table-factory/styles/withAdaptive';
 
     .scrollable-table {
         @extend .adaptive-table;

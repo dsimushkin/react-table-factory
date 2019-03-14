@@ -3,6 +3,7 @@
 
 # production
 /dist
+/styles
 
 # misc
 .DS_Store
