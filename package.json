@@ -16,7 +16,7 @@
     "watch": "rollup -cw",
     "prewatch": "yarn prebuild",
     "prepare": "yarn build",
-    "postpublish": "(cd demo && yarn deploy)"
+    "postpublish": "(cd demo && yarn deploy) && (git push && git push --tags)"
   },
   "peerDependencies": {
     "react": "^16.8.0"
