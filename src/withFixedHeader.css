@@ -32,16 +32,12 @@
 }
 
 .scrollable-table tbody tr td,
-.scrollable-table thead th {
+.scrollable-table > .scrollable-wrapper thead th {
     border-bottom: 1px solid var(--border-color);
 }
 
 .scrollable-table tbody tr:nth-child(even) td {
     background-color: var(--even-bg-color);
-}
-
-.scrollable-table tbody [tabIndex] {
-    cursor: pointer;
 }
 
 .scrollable-table tbody td {

@@ -149,6 +149,10 @@ export const withFixedHeader = (tableFactory=table) => ({
         useLayoutEffect(
             () => {
                 layout();
+
+                return () => {
+                    cancelAnimationFrame(t);
+                }
             }
         )
     
