@@ -19,6 +19,13 @@ A HoC to implement table components with a set of overridable options.
 | `headerRenderer` | `DefaultHeaderRenderer` | table thead component |
 | `columns` | `[]` | array of column configurations. |
 
+## columns config
+| name | type | description |
+| --- | --- | -- |
+| `cell` (optional) | `Component` {`data`, `index`, `rowIndex`, table props that are not used for HoC implementation} | Component to render a table cell |
+| `header` (optional) | `Component` {table props that are not used for HoC implementation} | Component to render a header cell |
+| `name` (optional) | `string` | Column key |
+
 Simple example:
 ```jsx
 import { table } from 'react-table-factory';
@@ -61,7 +68,7 @@ Some components can use css. Corresponding files should have the same base name.
 | name (css) (remarks) | options(=defaults) | Table props:column config | description |
 | --- | --- | --- | --- |
 | `withFixedHeader` (true) ||| Creates 2 Tables to implement a fixed header and a scrollable table content. Since it creates 2 tables, any decorators with context wrappers around table should NOT be wrapped by this component. |
-| `withInlineDetailsContext` (false) | {`selectionReducer`, `tabIndex`} | {`detailsRenderer`}:{} | Wraps Table with `selectionContext`. Implemented `selectionReducer`s are `singeSelectionReducer` and `multiSelectionReducer`. |
+| `withInlineDetailsContext` (false) | {`selectionReducer`, `tabIndex`} | {`detailsRenderer`, `isSelectable`}:{} | Wraps Table with `selectionContext`. Implemented `selectionReducer`s are `singeSelectionReducer` and `multiSelectionReducer`. |
 | `withLazyLoading` (false) | {`Loading` = ()=>'Loading', `threshold`=50} | {`fetch`, `fetching`}:{} | Decorator around `withFixedHeader` table decorator. When fetching prop is set to true, show `Loading` component after table contents. When the container is scrolled to bottom (taking `threshold` into account) `fetch` is called. |
 | `withSortingContext` (true) | {`defaultDirection`, `sortFactory`, `inMemory` = false, `sortableContextHoc`} | {`onSort`, `sortDirection`='asc', `sortParameter`}:{`sortable`,`name`} | Wraps Table with `SortableContext`. Provides a `Sorter` Component to implement custom sorting elements. If a `name` option of column config is an array, the one from Table props will be used, otherwise the first elem will be used. |
 | `withInMemorySortingContext` (true) | {`defaultDirection`, `sortFactory`} | { `onSort`, `defaultSortParameter`, `defaultSortDirection`= 'asc'}:{`sortable`,`name`} | An overload wrapper for `withSortingContext` to provide in-memory sorting.

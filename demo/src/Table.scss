@@ -1,6 +1,7 @@
 @import '~react-table-factory/styles/withFixedHeader';
 @import '~react-table-factory/styles/withHeaderCellOverflow';
 @import '~react-table-factory/styles/withSortingContext';
+@import '~react-table-factory/styles/withInlineDetailsContext';
 
 .scrollable-table .adaptive-col-name {
     display: none;

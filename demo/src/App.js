@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './App.css';
 
@@ -12,7 +12,9 @@ import {
   withAdaptive,
   withInMemorySortingContext, Sorter,
   withInlineDetailsContext,
-  withFixedHeader
+  withFixedHeader,
+  SelectionContext,
+  DetailsContext
 } from 'react-table-factory';
 
 const Table = composeDecorators(
@@ -89,18 +91,48 @@ const columns = [
       ),
       style: {width: '30%'},
   },
+  {
+    header: () => (
+      <span>Cell indexies</span>
+    ),
+    cell: ({index, rowIndex}) => {
+      const {isSelected} = useContext(SelectionContext);
+      const {isSelectable} = useContext(DetailsContext);
+      return (
+        <React.Fragment>
+          <div>{`[${rowIndex},${index}]`}</div>
+          <div>{
+            isSelected(rowIndex)
+              ? 'selected'
+              : (
+                isSelectable(rowIndex)
+                  ? 'selectable'
+                  : 'not selectable'
+                )
+            }</div>
+        </React.Fragment>
+      )
+    },
+    style: {minWidth: '150px'},
+    removeOverflowWrapper: true
+  }
 ]
 
-const InlineDetails = ({data}) => (
-  <div>
-    { Object.keys(data).map((key, i) => (
-      <p key={i}>
-        <label>{key} : </label>
-        <span>{data[key]}</span>
+const InlineDetails = ({data, index}) => {
+  return (
+    <div>
+      <p>
+        Details of row {index}
       </p>
-    )) }
-  </div>
-)
+      { Object.keys(data).map((key, i) => (
+        <p key={i}>
+          <label>{key} : </label>
+          <span>{data[key]}</span>
+        </p>
+      )) }
+    </div>
+  )
+}
 
 const App = () => {
   const [data] = useState(generateData(100));
@@ -120,6 +152,7 @@ const App = () => {
           defaultSortDirection="asc"
           detailsRenderer={InlineDetails}
           columns={columns}
+          isSelectable={(index) => index < 5}
         />
       </main>
     </div>

@@ -18,7 +18,8 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
         const {
             close, toggle, isSelected,
             detailsRenderer: Details,
-            tabIndex
+            tabIndex,
+            isSelectable=(index) => true,
         } = useContext(DetailsContext);
         if (Details == null)
         {
@@ -29,23 +30,25 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
 
         const onClick = () => toggle(index);
         const selected = isSelected(index);
+        const selectable = isSelectable(index);
 
         const classNames = [];
         if (className) classNames.push(className);
+        if (selectable) classNames.push('selectable-row');
         if (selected) classNames.push('selected-row');
 
         return (
             <React.Fragment>
                 <Row
+                    {...props}
                     tabIndex={onClick && tabIndex ? tabIndex : undefined}
-                    onKeyPress={(e) => {
+                    onKeyPress={selectable ? (e) => {
                         if (e.which === 13 && e.target.click) e.target.click();
-                    }}
-                    onClick={onClick}
+                    } : undefined}
+                    onClick={selectable ? onClick : undefined}
                     columns={columns}
                     className={classNames.length > 0 ? classNames.join(' ') : undefined}
                     tableProps={tableProps}
-                    {...props}
                 />
                 { selected ? (
                     <tr className="inline-details">
@@ -98,21 +101,18 @@ export const withInlineDetailsContext = ({
 
     return (
         selectionContext(selectionReducer, forwardRef(({
-            data, detailsRenderer, ...props
+            data, detailsRenderer, isSelectable, ...props
         }, ref) => {
                 const {remove, clear, toggle, isSelected} = useContext(SelectionContext);
 
-                useEffect(
-                    clear,
-                    [data]
-                )
+                useEffect(clear, [data]);
 
                 return (
                     <DetailsContext.Provider
                         value={{
                             close: remove, toggle, isSelected, // selection context
-                            detailsRenderer, // details context
-                            tabIndex
+                            detailsRenderer, isSelectable, // details context
+                            tabIndex,
                         }}
                     >
                         <Table

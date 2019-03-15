@@ -76,9 +76,12 @@ export const selectionContext = (selectionReducer=singeSelectionReducer, Compone
 
         return (
             <SelectionContext.Provider
-                value={{remove, toggle, isSelected, add, clear}}
+                value={{remove, toggle, isSelected, add, clear, selected}}
             >
-                <Component {...props} ref={ref}/>
+                <Component
+                    {...props}
+                    ref={ref}
+                />
             </SelectionContext.Provider>
         )
     })

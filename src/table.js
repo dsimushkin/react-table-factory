@@ -7,6 +7,7 @@ export const DefaultRowRenderer = forwardRef((props, ref) => (
 export const DefaultCellRenderer = forwardRef(({
     columns,
     index,
+    rowIndex,
     ...props
 }, ref) => (
     <td {...props} ref={ref} />
@@ -96,10 +97,13 @@ export const DefaultDataRowRenderer = forwardRef(({
                 key={i}
                 columns={columns}
                 index={i}
+                rowIndex={index}
             >
                 <DataCell
                     {...columnProps}
                     data={data}
+                    index={i}
+                    rowIndex={index}
                     {...tableProps}
                 />
             </Cell>
