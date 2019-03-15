@@ -27,7 +27,7 @@ const sortableHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => forwardRe
     return (
         <Cell
             ref={ref}
-            className={classNames.join(" ")}
+            className={classNames.length > 0 ? classNames.join(' ') : undefined}
             onClick={sortable ? () => sort(name) : undefined}
             name={name}
             {...props}

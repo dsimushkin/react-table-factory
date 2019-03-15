@@ -41,7 +41,7 @@ export const Sorter = ({name, disabled=false, Component = 'span', className, ...
 
     return (
         <Component
-            className={classNames.join(' ')}
+            className={classNames.length > 0 ? classNames.join(' ') : undefined}
             onClick={disabled ? undefined : () => sort(name)}
             {...props}
         />

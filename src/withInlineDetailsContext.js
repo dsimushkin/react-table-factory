@@ -17,7 +17,8 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
     }) => {
         const {
             close, toggle, isSelected,
-            detailsRenderer: Details
+            detailsRenderer: Details,
+            tabIndex
         } = useContext(DetailsContext);
         if (Details == null)
         {
@@ -36,13 +37,13 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
         return (
             <React.Fragment>
                 <Row
-                    tabIndex={onClick ? 0 : undefined}
+                    tabIndex={onClick && tabIndex ? tabIndex : undefined}
                     onKeyPress={(e) => {
                         if (e.which === 13 && e.target.click) e.target.click();
                     }}
                     onClick={onClick}
                     columns={columns}
-                    className={classNames.join(' ')}
+                    className={classNames.length > 0 ? classNames.join(' ') : undefined}
                     tableProps={tableProps}
                     {...props}
                 />
@@ -84,7 +85,8 @@ export const DetailsContext = React.createContext({
  * @param {*} selectionReducer -- a reducer used by SelectionContext. 
  */
 export const withInlineDetailsContext = ({
-    selectionReducer=singleSelectionReducer
+    selectionReducer=singleSelectionReducer,
+    tabIndex
 }={}) => (tableFactory=table) => ({
     dataRowRenderer,
     ...props
@@ -109,7 +111,8 @@ export const withInlineDetailsContext = ({
                     <DetailsContext.Provider
                         value={{
                             close: remove, toggle, isSelected, // selection context
-                            detailsRenderer // details context
+                            detailsRenderer, // details context
+                            tabIndex
                         }}
                     >
                         <Table
