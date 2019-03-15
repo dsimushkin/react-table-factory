@@ -32,7 +32,7 @@
 }
 
 .scrollable-table tbody tr td,
-.scrollable-table > .scrollable-wrapper thead th {
+.scrollable-table > .scrollable-table-wrapper thead th {
     border-bottom: 1px solid var(--border-color);
 }
 
