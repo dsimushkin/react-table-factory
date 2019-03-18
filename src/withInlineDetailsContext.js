@@ -150,7 +150,7 @@ export const withInlineDetailsContext = ({
                                 isSelectable(data, index)
                             ),
                             tabIndex, keyFactory,
-                            selected: selection.selected.map((index) => keyFactory(data, index))
+                            selected: selection.selected
                         }}
                     >
                         <Table
