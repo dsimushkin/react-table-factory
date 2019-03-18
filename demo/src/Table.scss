@@ -3,7 +3,7 @@
 @import '~react-table-factory/styles/withSortingContext';
 @import '~react-table-factory/styles/withInlineDetailsContext';
 
-.scrollable-table .adaptive-col-name {
+.adaptive-col-name {
     display: none;
 }
 
@@ -24,5 +24,31 @@
                 margin-right: 5px;
             }
         }
+    }
+}
+
+/* Add effects (not necessary) */
+.selectable-row {
+    perspective: 40em;
+    transform: rotateX(0);
+    // transition: color .1s linear;
+}
+
+.selectable-row:not(.selected-row):hover,
+.selected-row
+{
+    animation: rotate .3s ease-out;
+    color: rgb(52, 121, 241);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateX(30deg);
+    }
+    50% {
+        transform: rotateX(60deg);
+    }
+    100% {
+        transform: rotateX(0);
     }
 }

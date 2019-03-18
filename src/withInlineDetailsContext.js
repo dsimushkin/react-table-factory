@@ -1,6 +1,6 @@
-import React, { useContext, forwardRef, useEffect } from 'react';
+import React, { useContext, forwardRef, useEffect, useRef } from 'react';
 
-import { table, DefaultDataRowRenderer } from './table';
+import { table, DefaultDataRowRenderer, DefaultRowRenderer } from './table';
 import { selectionContext, SelectionContext, singleSelectionReducer } from './hocs/withSelection';
 
 /**
@@ -8,7 +8,10 @@ import { selectionContext, SelectionContext, singleSelectionReducer } from './ho
  * 
  * @param {*} Row - dataRowRenderer
  */
-const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
+const detailsRowRenderer = (
+    DataRow=DefaultDataRowRenderer,
+    Row=DefaultRowRenderer
+) => {
     const RowWithDetals = ({
         columns,
         className,
@@ -39,7 +42,7 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
 
         return (
             <React.Fragment>
-                <Row
+                <DataRow
                     {...props}
                     tabIndex={onClick && tabIndex ? tabIndex : undefined}
                     onKeyPress={selectable ? (e) => {
@@ -51,7 +54,7 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
                     tableProps={tableProps}
                 />
                 { selected ? (
-                    <tr className="inline-details">
+                    <Row className="inline-details">
                         <td colSpan={columns.length}>
                             <Details
                                 {...props}
@@ -59,7 +62,7 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
                                 close={() => close(index)}
                             />
                         </td>
-                    </tr>
+                    </Row>
                 ) : null}
             </React.Fragment>
         )
@@ -68,13 +71,16 @@ const detailsRowRenderer = (Row=DefaultDataRowRenderer) => {
     return RowWithDetals;
 }
 
-const efn=()=>{}
-
 export const DetailsContext = React.createContext({
-    detailsRenderer: efn,
-    close: efn,
-    toggle: efn,
-    isSelected: efn,
+    detailsRenderer: () => null,
+    close: index => {},
+    toggle: index => {},
+    isSelected: index => true,
+    clear: ()=> {},
+    isSelectable: index => true,
+    selected: [],
+    tabIndex: undefined,
+    keyFactory: index => true
 });
 
 /**
@@ -89,30 +95,62 @@ export const DetailsContext = React.createContext({
  */
 export const withInlineDetailsContext = ({
     selectionReducer=singleSelectionReducer,
-    tabIndex
+    tabIndex,
+    clearOnDataChange=true,
+    isSelectable=(data, index) => true,
+    keyFactory=(data, index) => index,
 }={}) => (tableFactory=table) => ({
     dataRowRenderer,
+    rowRenderer,
     ...props
 }={}) => {
     const Table = tableFactory({
-        dataRowRenderer: detailsRowRenderer(dataRowRenderer),
+        dataRowRenderer: detailsRowRenderer(dataRowRenderer, rowRenderer),
+        rowRenderer,
         ...props
     })
 
     return (
         selectionContext(selectionReducer, forwardRef(({
-            data, detailsRenderer, isSelectable, ...props
+            data, detailsRenderer, ...props
         }, ref) => {
-                const {remove, clear, toggle, isSelected} = useContext(SelectionContext);
-
-                useEffect(clear, [data]);
+                const selection = useContext(SelectionContext);
+                
+                // dirty
+                const mounted = useRef();
+                useEffect(
+                    () => {
+                        if (!mounted.current) {
+                            mounted.current = true;
+                        }
+                        else {
+                            if (clearOnDataChange) {
+                                selection.clear();
+                            }
+                        }
+                    },
+                    [data]
+                );
 
                 return (
                     <DetailsContext.Provider
                         value={{
-                            close: remove, toggle, isSelected, // selection context
-                            detailsRenderer, isSelectable, // details context
-                            tabIndex,
+                            close: (index) => {
+                                selection.remove(keyFactory(data, index))
+                            },
+                            toggle: (index) => {
+                                selection.toggle(keyFactory(data, index))
+                            },
+                            isSelected: (index) => (
+                                selection.isSelected(keyFactory(data, index))
+                            ),
+                            clear: selection.clear,
+                            detailsRenderer,
+                            isSelectable: (index) => (
+                                isSelectable(data, index)
+                            ),
+                            tabIndex, keyFactory,
+                            selected: selection.selected.map((index) => keyFactory(data, index))
                         }}
                     >
                         <Table

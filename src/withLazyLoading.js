@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
 
 import { table } from './table';
 import { useTotalScroll } from './hooks/useTotalScroll';
@@ -13,18 +13,27 @@ import { useTotalScroll } from './hooks/useTotalScroll';
 export const withLazyLoading = ({
     Loading=() => 'Loading',
     threshold=50
-}) => (tableFactory=table) => (options) => {
+}={}) => (tableFactory=table) => (options) => {
     const Table = tableFactory(options);
 
     return forwardRef(({fetch, fetching, children, ...props}, ref) => {
         const tableRef = useRef();
         useImperativeHandle(ref, () => tableRef.current);
 
+        // execute only first fetch request
+        let timeout;
         const fetchIfNeeded = () => {
-            if (!fetching && fetch) {
-                fetch();
+            if (timeout == null) {
+                timeout = setTimeout(() => {
+                    if (!fetching && fetch) {
+                        fetch();
+                    }
+                }, 0);
             }
         }
+
+        // clear any existing timeouts on unmount
+        useEffect(() => () => clearTimeout(timeout), []);
 
         const anotherRef = useRef();
         useImperativeHandle(anotherRef, () => tableRef.current.scrollContainer)

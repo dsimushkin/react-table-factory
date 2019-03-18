@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 
 import './App.css';
 
@@ -13,15 +13,23 @@ import {
   withInMemorySortingContext, Sorter,
   withInlineDetailsContext,
   withFixedHeader,
-  SelectionContext,
-  DetailsContext
+  DetailsContext,
+  SortableContext,
+  // withLazyLoading
 } from 'react-table-factory';
 
 const Table = composeDecorators(
   withHeaderCellOverflow,
   withAdaptive(),
-  withInMemorySortingContext({defaultDirection: 'desc'}),
-  withInlineDetailsContext(),
+  withInMemorySortingContext({
+    defaultDirection: 'desc'
+  }),
+  // withLazyLoading(),
+  withInlineDetailsContext({
+    isSelectable: (data, index) => index % 3 === 0 || index % 3 === 1,
+    keyFactory: (data, index) => index,
+    clearOnDataChange: false
+  }),
   withFixedHeader // should be last
 )()
 
@@ -96,8 +104,7 @@ const columns = [
       <span>Cell indexies</span>
     ),
     cell: ({index, rowIndex}) => {
-      const {isSelected} = useContext(SelectionContext);
-      const {isSelectable} = useContext(DetailsContext);
+      const {isSelectable, isSelected} = useContext(DetailsContext);
       return (
         <React.Fragment>
           <div>{`[${rowIndex},${index}]`}</div>
@@ -134,8 +141,64 @@ const InlineDetails = ({data, index}) => {
   )
 }
 
+const EnhanceTableBehaviour = () => {
+  const selection = useContext(DetailsContext);
+  const sorting = useContext(SortableContext);
+
+  useEffect(
+    () => {
+      if (selection.selected.length) {
+        selection.clear();
+      }
+    },
+    [sorting.sortOrder]
+  )
+
+  return null;
+}
+
+const requestsReducer = (state, action) => {
+  switch(action.type) {
+    case '@fetch':
+      return {
+        ...state,
+        fetching: true
+      }
+    case '@add':
+      return {
+        ...state,
+        data: [...state.data, ...action.value],
+        fetching: false
+      }
+    default:
+      return state;
+  }
+}
+
 const App = () => {
-  const [data] = useState(generateData(100));
+  const [{data}] = useReducer(
+    requestsReducer, {
+      data: generateData(20),
+      fetching: false
+    }
+  );
+
+  // let timeout;
+  // const fetch = () => {
+  //   clearTimeout(timeout);
+  //   timeout = setTimeout(() => {
+  //     dispatch({type: '@add', value: generateData(20)});
+  //   }, 500);
+  //   dispatch({type: '@fetch'});
+  // }
+
+  // useEffect(
+  //   () => {
+  //     return () => {
+  //       clearTimeout(timeout);
+  //     }
+  //   }, []
+  // )
 
   return (
     <div className="App">
@@ -147,13 +210,16 @@ const App = () => {
       <main>
         <Table
           data={data}
+          // fetching={fetching}
+          // fetch={fetch}
           className="default-theme"
           defaultSortParameter="data1"
           defaultSortDirection="asc"
           detailsRenderer={InlineDetails}
           columns={columns}
-          isSelectable={(index) => index < 5}
-        />
+        >
+          <EnhanceTableBehaviour />
+        </Table>
       </main>
     </div>
   );

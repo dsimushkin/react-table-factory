@@ -112,9 +112,9 @@ export const DefaultDataRowRenderer = forwardRef(({
 ))
 
 export const table = ({
-    rowRenderer=DefaultRowRenderer,
-    cellRenderer=DefaultCellRenderer,
-    dataRowRenderer: Row=DefaultDataRowRenderer,
+    rowRenderer: Row=DefaultRowRenderer,
+    cellRenderer: Cell=DefaultCellRenderer,
+    dataRowRenderer: DataRow=DefaultDataRowRenderer,
     dataCellRenderer=DefaultDataCellRenderer,
     headerCellRenderer=DefaultHeaderCellRenderer,
     headerCellContentRenderer=DefaultHeaderCellContentRenderer,
@@ -152,22 +152,31 @@ export const table = ({
                 headerCellRenderer={headerCellRenderer}
                 headerCellContentRenderer={headerCellContentRenderer}
                 tableProps={props}
-                rowRenderer={rowRenderer}
+                rowRenderer={Row}
             />
             <tbody>
                 { data.map((data, i) => (
-                    <Row
+                    <DataRow
                         data={data}
                         key={i}
                         columns={columns}
                         index={i}
-                        cellRenderer={cellRenderer}
+                        cellRenderer={Cell}
                         dataCellRenderer={dataCellRenderer}
                         tableProps={props}
-                        rowRenderer={rowRenderer}
+                        rowRenderer={Row}
                     />
                 ))}
             </tbody>
+            <tfoot>
+                { children ? (
+                    <Row className="additional-row">
+                        <Cell colSpan={columns.length}>
+                            { children }
+                        </Cell>
+                    </Row>
+                ) : null}
+            </tfoot>
         </table>
     )
 })

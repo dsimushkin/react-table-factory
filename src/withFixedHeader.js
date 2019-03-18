@@ -81,8 +81,6 @@ const Context = React.createContext({
  * 
  * Adds scrollable container to the table generated ref.
  * 
- * Children will be rendered immediately after the table.
- * 
  * !IMPORTANT!
  * Since this decorator is creating multiple tables it
  * should be before any other wrappers that use context provider.
@@ -153,7 +151,7 @@ export const withFixedHeader = (tableFactory=table) => ({
                 return () => {
                     cancelAnimationFrame(t);
                 }
-            }
+            }, []
         )
     
         return (
@@ -174,9 +172,8 @@ export const withFixedHeader = (tableFactory=table) => ({
                                     ref={tableRef}
                                     {...props}
                                 >
-                                { children }
+                                    { children }
                                 </Table>
-                                { children }
                             </div>
                         </div>
                     </div>
@@ -184,9 +181,7 @@ export const withFixedHeader = (tableFactory=table) => ({
                         <FakeTable
                             ref={clone}
                             {...props}
-                        >
-                            {children}
-                        </FakeTable>
+                        />
                     </div>
                 </div>
             </Context.Provider>
