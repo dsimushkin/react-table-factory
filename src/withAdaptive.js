@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { table, DefaultDataCellRenderer } from './table';
+import { table, DefaultDataCellRenderer, DefaultHeaderCellRenderer } from './table';
 
 /**
  * Table dataCellRenderer decorator HoC.
