@@ -14,7 +14,15 @@ const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
     ...props
 }, ref) => {
         const { columns, index } = props;
-        if (columns[index].control) return null;
+        if (
+            columns == null
+            || index == null
+            || columns[index] == null
+            || columns[index].control
+        )
+        {
+            return null;
+        }
 
         return (
             <Cell
@@ -32,7 +40,7 @@ const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
  * 
  * @param {*} Cell 
  */
-const decorageHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
+const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
     forwardRef(({
         control,
         ...props
@@ -53,7 +61,7 @@ export const withHeaderControl = (
 }={}) => {
     const Table = tableFactory({
         cellRenderer: decorateCellRenderer(cellRenderer),
-        headerCellRenderer: decorageHeaderCellRenderer(headerCellRenderer),
+        headerCellRenderer: decorateHeaderCellRenderer(headerCellRenderer),
         ...options
     });
 

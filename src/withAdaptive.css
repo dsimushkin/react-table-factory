@@ -31,9 +31,12 @@
     text-align: right;
 }
 
+.adaptive-table tbody :not(.inline-details) td > :first-child {
+    text-align: left;
+}
+
 .adaptive-table tbody :not(.inline-details) td > .adaptive-col-name {
     display: block;
-    text-align: left;
 }
 
 .adaptive-table .scrollable-table-content {

@@ -9,14 +9,21 @@ import { table, DefaultDataCellRenderer } from './table';
  * @param {*} Component - colname component
  */
 const withColname = (Cell=DefaultDataCellRenderer, Component) => {
-    const WithAdaptiveColname = forwardRef(({header, name, ...props}, ref) => {
+    const WithAdaptiveColname = forwardRef(({
+        header,
+        name,
+        removeAdaptiveColname=false,
+        ...props
+    }, ref) => {
         return (
             <React.Fragment>
-                <Component
-                    header={header}
-                    name={name}
-                    {...props}
-                />
+                { !removeAdaptiveColname ? (
+                    <Component
+                        header={header}
+                        name={name}
+                        {...props}
+                    />
+                ) : null}
                 <Cell
                     header={header}
                     name={name}
@@ -30,6 +37,24 @@ const withColname = (Cell=DefaultDataCellRenderer, Component) => {
     return WithAdaptiveColname;
 }
 
+/**
+ * Table headerCellRenderer decorator HoC.
+ * Removes removeOverflowWrapper property and stores it on context.
+ * 
+ * @param {*} Cell 
+ */
+const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
+    forwardRef(({
+        removeAdaptiveColname,
+        ...props
+    }, ref) => (
+        <Cell
+            ref={ref}
+            {...props}
+        />
+    ))
+)
+
 export const DefaultAdaptiveComponent = ({header: Header, name, onClick, ...props}) => (
     <span className="adaptive-col-name">
         { Header ? (
@@ -42,10 +67,12 @@ export const withAdaptive = ({
     Component=DefaultAdaptiveComponent
 }={}) => (tableFactory=table) => ({
     dataCellRenderer,
+    headerCellRenderer,
     ...options
 }={}) => {
     const Table = tableFactory({
         dataCellRenderer: withColname(dataCellRenderer, Component),
+        headerCellRenderer: decorateHeaderCellRenderer(headerCellRenderer),
         ...options
     })
 

@@ -34,21 +34,29 @@
     // transition: color .1s linear;
 }
 
+@media all and (min-width: 941px) {
+    .selectable-row:not(.selected-row):hover,
+    .selected-row
+    {
+        animation: rotate .3s ease-out;
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotateX(30deg);
+        }
+        50% {
+            transform: rotateX(60deg);
+        }
+        100% {
+            transform: rotateX(0);
+        }
+    }
+}
+
 .selectable-row:not(.selected-row):hover,
 .selected-row
 {
     animation: rotate .3s ease-out;
     color: rgb(52, 121, 241);
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotateX(30deg);
-    }
-    50% {
-        transform: rotateX(60deg);
-    }
-    100% {
-        transform: rotateX(0);
-    }
 }

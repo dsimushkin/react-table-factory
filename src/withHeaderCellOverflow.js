@@ -27,7 +27,7 @@ const OverflowContext = React.createContext({
  * 
  * @param {*} Cell 
  */
-const decorageHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
+const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
     forwardRef(({
         removeOverflowWrapper,
         ...props
@@ -77,7 +77,7 @@ export const withHeaderCellOverflow = (
 }={}) => {
     return tableFactory({
         headerCellContentRenderer: decorateHeaderCellContentRenderer(headerCellContentRenderer),
-        headerCellRenderer: decorageHeaderCellRenderer(headerCellRenderer),
+        headerCellRenderer: decorateHeaderCellRenderer(headerCellRenderer),
         ...props
     });
 }

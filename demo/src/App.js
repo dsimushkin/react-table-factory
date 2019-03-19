@@ -15,10 +15,12 @@ import {
   withFixedHeader,
   DetailsContext,
   SortableContext,
+  withHeaderControl,
   // withLazyLoading
 } from 'react-table-factory';
 
 const Table = composeDecorators(
+  withHeaderControl,
   withHeaderCellOverflow,
   withAdaptive(),
   withInMemorySortingContext({
@@ -48,12 +50,21 @@ const columns = [
       sortable: true,
   },
   {
-      name: 'data2',
+      name: 'Description',
       header: () => (
-        <span>Data 2 with custom header</span>
+        <span>Description</span>
+      ),
+      cell: ({data}) => (
+        <React.Fragment>
+          <span>A very very very very very long description cell with some data: {data.data2}</span>
+          <span className="adaptive-col-name">
+            Adaptive only
+          </span>
+        </React.Fragment>
       ),
       style: {width: '30%'},
       sortable: true,
+      removeAdaptiveColname: true
   },
   {
     sortable: true,
@@ -122,6 +133,11 @@ const columns = [
     },
     style: {minWidth: '150px'},
     removeOverflowWrapper: true
+  },
+  {
+    header: () => <span>Hello</span>,
+    control: true,
+    style: {minWidth: 100}
   }
 ]
 
