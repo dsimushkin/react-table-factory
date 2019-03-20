@@ -120,7 +120,7 @@ export const table = ({
     headerCellContentRenderer=DefaultHeaderCellContentRenderer,
     headerRenderer: Header=DefaultHeaderRenderer,
 }={}) => forwardRef(({
-    children, // remove children
+    children,
     data=[], columns=[], // arbitrary
     style={}, className, // styles
     ...props

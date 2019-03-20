@@ -21,7 +21,13 @@ const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
             || columns[index].control
         )
         {
-            return null;
+            return (
+                <Cell
+                    ref={ref}
+                    colSpan={colSpan}
+                    {...props}
+                />
+            );
         }
 
         return (

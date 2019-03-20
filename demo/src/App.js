@@ -16,7 +16,7 @@ import {
   DetailsContext,
   SortableContext,
   withHeaderControl,
-  // withLazyLoading
+  withLazyLoading
 } from 'react-table-factory';
 
 const Table = composeDecorators(
@@ -26,7 +26,7 @@ const Table = composeDecorators(
   withInMemorySortingContext({
     defaultDirection: 'desc'
   }),
-  // withLazyLoading(),
+  withLazyLoading(),
   withInlineDetailsContext({
     isSelectable: (data, index) => index % 3 === 0 || index % 3 === 1,
     keyFactory: (data, index) => index,
@@ -189,29 +189,29 @@ const requestsReducer = (state, action) => {
 }
 
 const App = () => {
-  const [{data}] = useReducer(
+  const [{data, fetching}, dispatch] = useReducer(
     requestsReducer, {
       data: generateData(20),
       fetching: false
     }
   );
 
-  // let timeout;
-  // const fetch = () => {
-  //   clearTimeout(timeout);
-  //   timeout = setTimeout(() => {
-  //     dispatch({type: '@add', value: generateData(20)});
-  //   }, 500);
-  //   dispatch({type: '@fetch'});
-  // }
+  let timeout;
+  const fetch = () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      dispatch({type: '@add', value: generateData(20)});
+    }, 2000);
+    dispatch({type: '@fetch'});
+  }
 
-  // useEffect(
-  //   () => {
-  //     return () => {
-  //       clearTimeout(timeout);
-  //     }
-  //   }, []
-  // )
+  useEffect(
+    () => {
+      return () => {
+        clearTimeout(timeout);
+      }
+    }, []
+  )
 
   return (
     <div className="App">
@@ -223,8 +223,8 @@ const App = () => {
       <main>
         <Table
           data={data}
-          // fetching={fetching}
-          // fetch={fetch}
+          fetching={fetching}
+          fetch={fetch}
           className="default-theme"
           defaultSortParameter="data1"
           defaultSortDirection="asc"
