@@ -57,9 +57,6 @@ const columns = [
       cell: ({data}) => (
         <React.Fragment>
           <span>A very very very very very long description cell with some data: {data.data2}</span>
-          <span className="adaptive-col-name">
-            Adaptive only
-          </span>
         </React.Fragment>
       ),
       style: {width: '30%'},
@@ -118,8 +115,8 @@ const columns = [
       const {isSelectable, isSelected} = useContext(DetailsContext);
       return (
         <React.Fragment>
-          <div>{`[${rowIndex},${index}]`}</div>
-          <div>{
+          <span>{`[${rowIndex},${index}]`}</span>
+          <span style={{marginLeft: 10}}>{
             isSelected(rowIndex)
               ? 'selected'
               : (
@@ -127,11 +124,11 @@ const columns = [
                   ? 'selectable'
                   : 'not selectable'
                 )
-            }</div>
+            }</span>
         </React.Fragment>
       )
     },
-    style: {minWidth: '150px'},
+    style: {minWidth: '80px'},
     removeOverflowWrapper: true
   },
   {

@@ -3,7 +3,6 @@
 }
 
 .adaptive-table thead,
-.adaptive-table tfoot,
 .adaptive-table .scrollable-fake-table {
     display: none;
 }
