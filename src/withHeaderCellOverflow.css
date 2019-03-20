@@ -1,4 +1,4 @@
-.scrollable-table .header-wrapper {
+table > thead > tr > th > .header-wrapper {
     text-align: left;
     width: 100%;
     display: flex;
@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.scrollable-table .header-wrapper .header-positioner {
+table > thead > tr > th > .header-wrapper .header-positioner {
     flex: auto;
     width: 100%;
     height: 100%;
@@ -18,13 +18,13 @@
     padding: var(--cell-padding);
 }
 
-.scrollable-table .header-wrapper .header-positioner > div {
+table > thead > tr > th > .header-wrapper .header-positioner > div {
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
 }
 
-.scrollable-table .header-wrapper .header-positioner:hover {
+table > thead > tr > th > .header-wrapper .header-positioner:hover {
     width: auto;
     overflow: visible;
     background-color: #fff;
@@ -32,7 +32,7 @@
     position: relative;
 }
 
-.scrollable-table .header-wrapper .header-positioner:hover::before {
+table > thead > tr > th > .header-wrapper .header-positioner:hover::before {
     content: '';
     position: absolute;
     top: 0;

@@ -1,0 +1,41 @@
+table.default-theme {
+    --bg-color: #fff;
+    --header-ft-size: 12px;
+    --cell-ft-size: 14px;
+    --v-align: left;
+    --cell-padding: 4px 22px 4px 12px;
+    --border-color: #e7e9eb;
+    --even-bg-color: #f9f9f9;
+    --cell-height: 64px;
+}
+
+table.default-theme * {
+    box-sizing: border-box;
+}
+    
+table > thead > tr > th,
+table > tbody > tr:not(.inline-details) > td {
+    padding: var(--cell-padding);
+    text-align: var(--v-align);
+    height: var(--cell-height);
+    background-color: var(--bg-color);
+}
+
+table > thead > tr > th {
+    font-size: var(--header-ft-size);
+    background-color: var(--bg-color);
+    position: relative;
+}
+
+table > tbody > tr > td,
+table > thead > tr > th {
+    border-bottom: 1px solid var(--border-color);
+}
+
+table > tbody > tr:nth-child(even) > td {
+    background-color: var(--even-bg-color);
+}
+
+table > tbody > tr > td {
+    font-size: var(--cell-ft-size);
+}

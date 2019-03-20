@@ -30,11 +30,13 @@ const OverflowContext = React.createContext({
 const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
     forwardRef(({
         removeOverflowWrapper,
+        style={},
         ...props
     }, ref) => (
         <OverflowContext.Provider value={{removeOverflowWrapper}}>
             <Cell
                 ref={ref}
+                style={{...style, position: 'relative'}}
                 {...props}
             />
         </OverflowContext.Provider>

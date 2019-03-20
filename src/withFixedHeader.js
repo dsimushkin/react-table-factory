@@ -104,7 +104,6 @@ export const withFixedHeader = (tableFactory=table) => ({
 
     return forwardRef(({
         children, data, // arbitrary
-        style={}, className='',
         onScroll,
         ...props
     }, ref) => {
@@ -157,8 +156,8 @@ export const withFixedHeader = (tableFactory=table) => ({
         return (
             <Context.Provider value={{layout}}>
                 <div
-                    style={{...style, position: 'relative'}}
-                    className={`scrollable-table ${className}`}
+                    style={{position: 'relative'}}
+                    className="scrollable-table"
                 >
                     <div
                         className="scrollable-table-content"

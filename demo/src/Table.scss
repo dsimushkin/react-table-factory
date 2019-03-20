@@ -1,8 +1,11 @@
+/* Inject styles */
 @import '~react-table-factory/styles/withFixedHeader';
 @import '~react-table-factory/styles/withHeaderCellOverflow';
 @import '~react-table-factory/styles/withSortingContext';
 @import '~react-table-factory/styles/withInlineDetailsContext';
+@import '~react-table-factory/styles/table';
 
+/* Inject adaptive behavior */
 .adaptive-col-name {
     display: none;
 }
@@ -10,8 +13,12 @@
 @media all and (max-width: 940px) {
     @import '~react-table-factory/styles/withAdaptive';
 
-    .scrollable-table {
+    table {
         @extend .adaptive-table;
+    }
+
+    .scrollable-table {
+        @extend .adaptive-scrollable-table;
     }
 
     .scrollable-table {

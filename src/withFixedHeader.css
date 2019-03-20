@@ -1,61 +1,20 @@
-.scrollable-table.default-theme {
-    --bg-color: #fff;
-    --header-ft-size: 12px;
-    --cell-ft-size: 14px;
-    --v-align: left;
-    --cell-padding: 4px 22px 4px 12px;
-    --border-color: #e7e9eb;
-    --even-bg-color: #f9f9f9;
-    --cell-height: 64px;
-}
-
 .scrollable-table {
     height: 100%;
 }
 
-.scrollable-table.default-theme * {
-    box-sizing: border-box;
-}
-    
-.scrollable-table thead th,
-.scrollable-table tbody tr:not(.inline-details) td {
-    padding: var(--cell-padding);
-    text-align: var(--v-align);
-    height: var(--cell-height);
-    background-color: var(--bg-color);
-}
-
-.scrollable-table th {
-    font-size: var(--header-ft-size);
-    background-color: var(--bg-color);
-    position: relative;
-}
-
-.scrollable-table tbody tr td,
-.scrollable-table > .scrollable-table-wrapper thead th {
-    border-bottom: 1px solid var(--border-color);
-}
-
-.scrollable-table tbody tr:nth-child(even) td {
-    background-color: var(--even-bg-color);
-}
-
-.scrollable-table tbody td {
-    font-size: var(--cell-ft-size);
-}
-
-.scrollable-table .scrollable-table-wrapper {
+.scrollable-table > .scrollable-table-wrapper,
+.scrollable-table > .scrollable-table-content > .scrollable-table-wrapper {
     padding: 0px 20px;
 }
 
-.scrollable-table .scrollable-table-content {
+.scrollable-table > .scrollable-table-content {
     position: relative;
     overflow-y: auto;
     top: var(--cell-height);
     height: 100%;
 }
 
-.scrollable-table .scrollable-table-content table {
+.scrollable-table > .scrollable-table-content > table {
     margin-top: calc(var(--cell-height)*(-1));
     border-bottom: 2px solid var(--border-color);
     width: 100%;
