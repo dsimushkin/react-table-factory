@@ -13,29 +13,29 @@ table.default-theme * {
     box-sizing: border-box;
 }
     
-table > thead > tr > th,
-table > tbody > tr:not(.inline-details) > td {
+table.default-theme > thead > tr > th,
+table.default-theme > tbody > tr:not(.inline-details) > td {
     padding: var(--cell-padding);
     text-align: var(--v-align);
     height: var(--cell-height);
     background-color: var(--bg-color);
 }
 
-table > thead > tr > th {
+table.default-theme > thead > tr > th {
     font-size: var(--header-ft-size);
     background-color: var(--bg-color);
     position: relative;
 }
 
-table > tbody > tr > td,
-table > thead > tr > th {
+table.default-theme > tbody > tr > td,
+table.default-theme > thead > tr > th {
     border-bottom: 1px solid var(--border-color);
 }
 
-table > tbody > tr:nth-child(even) > td {
+table.default-theme > tbody > tr:nth-child(even) > td {
     background-color: var(--even-bg-color);
 }
 
-table > tbody > tr > td {
+table.default-theme > tbody > tr > td {
     font-size: var(--cell-ft-size);
 }
