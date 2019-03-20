@@ -157,7 +157,7 @@ export const withFixedHeader = (tableFactory=table) => ({
             <Context.Provider value={{layout}}>
                 <div
                     style={{position: 'relative'}}
-                    className="scrollable-table"
+                    className={`scrollable-table ${props.className || ''}`}
                 >
                     <div
                         className="scrollable-table-content"
