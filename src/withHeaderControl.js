@@ -18,7 +18,6 @@ const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
             columns == null
             || index == null
             || columns[index] == null
-            || columns[index].control
         )
         {
             return (
@@ -29,6 +28,8 @@ const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
                 />
             );
         }
+
+        if (columns[index].control) return null;
 
         return (
             <Cell
