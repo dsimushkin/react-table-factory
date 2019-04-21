@@ -25,7 +25,7 @@ const exports = {
         {
             format: 'cjs',
             file: `dist/index.js`,
-            sourcemap: 'inline'
+            // sourcemap: 'inline'
         },
         // {
         //     format: 'umd',

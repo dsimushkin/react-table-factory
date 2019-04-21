@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect, useContext } from 'react';
 
 import { table, DefaultDataCellRenderer, DefaultHeaderCellRenderer } from './table';
+import { useMediaMaxWidth } from './hooks/useMediaMaxWidth';
 
 /**
  * Table dataCellRenderer decorator HoC.
@@ -15,9 +16,11 @@ const withColname = (Cell=DefaultDataCellRenderer, Component) => {
         removeAdaptiveColname=false,
         ...props
     }, ref) => {
+        const {isAdaptive} = useContext(AdaptiveContext);
+
         return (
             <React.Fragment>
-                { !removeAdaptiveColname ? (
+                { isAdaptive && !removeAdaptiveColname ? (
                     <Component
                         header={header}
                         name={name}
@@ -55,7 +58,12 @@ const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
     ))
 )
 
-export const DefaultAdaptiveComponent = ({header: Header, name, onClick, ...props}) => (
+export const DefaultAdaptiveComponent = ({
+    header: Header,
+    name,
+    onClick,
+    ...props
+}) => (
     <span className="adaptive-col-name">
         { Header ? (
             <Header {...props} name={name} disabled />
@@ -63,9 +71,16 @@ export const DefaultAdaptiveComponent = ({header: Header, name, onClick, ...prop
     </span>
 );
 
+export const AdaptiveContext = React.createContext({
+    isAdaptive: false
+})
+
 export const withAdaptive = ({
-    Component=DefaultAdaptiveComponent
-}={}) => (tableFactory=table) => ({
+    Component=DefaultAdaptiveComponent,
+    width=940,
+}={}) => (
+    tableFactory=table
+) => ({
     dataCellRenderer,
     headerCellRenderer,
     ...options
@@ -76,5 +91,32 @@ export const withAdaptive = ({
         ...options
     })
 
-    return Table;
+    return forwardRef(({
+            className,
+            ...props
+        },
+        ref
+    ) => {
+        const isAdaptiveByDefault = useMediaMaxWidth((matches) => {
+            if (matches !== isAdaptive) changeAdaptive(matches);
+        }, width);
+        
+        const [isAdaptive, changeAdaptive] = useState(
+            isAdaptiveByDefault
+        );
+
+        const classNames = [];
+        if (className != null) classNames.push(className);
+        if (isAdaptive) classNames.push('adaptive-table');
+
+        return (
+            <AdaptiveContext.Provider value={{isAdaptive}}>
+                <Table
+                    ref={ref}
+                    className={classNames.length > 0 ? classNames.join(' ') : undefined}
+                    {...props}
+                />
+            </AdaptiveContext.Provider>
+        )
+    });
 }

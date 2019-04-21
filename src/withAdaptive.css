@@ -21,6 +21,12 @@ table.adaptive-table > tbody > tr > td {
     background-color: var(--bg-color) !important;
 }
 
+table.adaptive-table > tfoot > tr,
+table.adaptive-table > tfoot > tr > td
+{
+    display: block;
+}
+
 table.adaptive-table > tbody > tr:not(.selected-row) {
     margin-bottom: 30px;
 }
@@ -38,17 +44,17 @@ table.adaptive-table > tbody > tr > td > .adaptive-col-name {
     display: block;
 }
 
-.adaptive-scrollable-table > .scrollable-table-content {
+div.adaptive-table > .scrollable-table-content {
     top: 20px !important;
     height: calc(100% - 20px) !important;
 }
 
-.adaptive-scrollable-table > .scrollable-table-content > .scrollable-table-wrapper > .table-wrapper > table {
+div.adaptive-table > .scrollable-table-content > .scrollable-table-wrapper > .table-wrapper > table {
     margin-top: 0 !important;
     border: 0;
 }
 
-.adaptive-scrollable-table > .scrollable-table-wrapper,
-.adaptive-scrollable-table > .scrollable-table-content > .scrollable-table-wrapper {
+div.adaptive-table > .scrollable-table-wrapper,
+div.adaptive-table > .scrollable-table-content > .scrollable-table-wrapper {
     padding: 0 20px 0 8px;
 }

@@ -22,11 +22,15 @@ import {
 const Table = composeDecorators(
   withHeaderControl,
   withHeaderCellOverflow,
-  withAdaptive(),
+  withAdaptive({
+    width: 940
+  }),
   withInMemorySortingContext({
     defaultDirection: 'desc'
   }),
-  withLazyLoading(),
+  withLazyLoading({
+    Loading: () => <div style={{textAlign: 'center', padding: 20}}>Fetching</div>,
+  }),
   withInlineDetailsContext({
     isSelectable: (data, index) => index % 3 === 0 || index % 3 === 1,
     keyFactory: (data, index) => index,

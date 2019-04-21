@@ -154,6 +154,15 @@ export const table = ({
                 tableProps={props}
                 rowRenderer={Row}
             />
+            <tfoot>
+                { children ? (
+                    <Row className="additional-row">
+                        <Cell colSpan={columns.length}>
+                            { children }
+                        </Cell>
+                    </Row>
+                ) : null}
+            </tfoot>
             <tbody>
                 { data.map((data, i) => (
                     <DataRow
@@ -168,15 +177,6 @@ export const table = ({
                     />
                 ))}
             </tbody>
-            <tfoot>
-                { children ? (
-                    <Row className="additional-row">
-                        <Cell colSpan={columns.length}>
-                            { children }
-                        </Cell>
-                    </Row>
-                ) : null}
-            </tfoot>
         </table>
     )
 })
