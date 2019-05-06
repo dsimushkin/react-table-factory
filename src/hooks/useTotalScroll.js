@@ -14,6 +14,7 @@ const isScrolledTillThreshold = (node, threshold=5) => {
 export const useTotalScroll = (ref, callback, threshold=5) => {
     useLayoutEffect(() => {
         const listener = (e) => {
+            console.log(e.target);
             if (isScrolledTillThreshold(e.target, threshold)) {
                 callback(e);
             }
@@ -21,13 +22,13 @@ export const useTotalScroll = (ref, callback, threshold=5) => {
 
         let listenerAdded = false
         if (ref && ref.current && ref.current.addEventListener) {
-            ref.current.addEventListener('scroll', listener, true);
+            ref.current.addEventListener('scroll', listener);
             listenerAdded = true;
         }
 
         return () => {
             if (ref && listenerAdded && ref.current && ref.current.removeEventListener) {
-                ref.current.removeEventListener('scroll', listener, true);
+                ref.current.removeEventListener('scroll', listener);
             }
         }
     })
