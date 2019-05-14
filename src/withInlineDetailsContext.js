@@ -26,7 +26,7 @@ const detailsRowRenderer = (
         } = useContext(DetailsContext);
         if (Details == null)
         {
-            return <Row {...{columns, className, ...props}} />
+            return <DataRow {...{columns, className, ...props}} />
         }
 
         const { index } = props;
@@ -102,17 +102,19 @@ export const withInlineDetailsContext = ({
 }={}) => (tableFactory=table) => ({
     dataRowRenderer,
     rowRenderer,
-    ...props
+    ...options
 }={}) => {
     const Table = tableFactory({
         dataRowRenderer: detailsRowRenderer(dataRowRenderer, rowRenderer),
         rowRenderer,
-        ...props
+        ...options
     })
 
     return (
         selectionContext(selectionReducer, forwardRef(({
-            data, detailsRenderer, ...props
+            data,
+            detailsRenderer,
+            ...props
         }, ref) => {
                 const selection = useContext(SelectionContext);
                 
