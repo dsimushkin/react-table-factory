@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import tslint from 'rollup-plugin-tslint';
+import typescript from 'rollup-plugin-typescript2';
 import fs from 'fs';
 import path from 'path';
 
@@ -20,11 +21,11 @@ const copyCssPlugin = {
 }
 
 const exports = {
-    input: `src/index.js`,
+    input: `src/index.ts`,
     output: [
         {
             format: 'cjs',
-            file: `dist/index.js`,
+            file: pkg.main
             // sourcemap: 'inline'
         },
         // {
@@ -39,11 +40,9 @@ const exports = {
     external: Object.keys(pkg.peerDependencies || {}),
     plugins: [
         resolve(),
-        babel({
-            exclude: "node_modules/**",
-            runtimeHelpers: true
-        }),
-        copyCssPlugin
+        tslint(),
+        typescript(),
+        // copyCssPlugin
     ]
 }
 
