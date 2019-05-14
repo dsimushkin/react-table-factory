@@ -26,7 +26,7 @@ const detailsRowRenderer = (
         } = useContext(DetailsContext);
         if (Details == null)
         {
-            return <DataRow {...{columns, className, ...props}} />
+            return <DataRow {...{columns, className, tableProps, ...props}} />
         }
 
         const { index } = props;
