@@ -16,12 +16,19 @@ import {
   DetailsContext,
   SortableContext,
   withHeaderControl,
-  withLazyLoading
+  withLazyLoading,
+  withEmptyRow
 } from 'react-table-factory';
 
 const Table = composeDecorators(
   withHeaderControl,
   withHeaderCellOverflow,
+  withEmptyRow({
+    isEmpty: ({data}) => data.isEmpty,
+    Component: () => (
+      <div style={{textAlign: 'center'}}>Empty row</div>
+    )
+  }),
   withAdaptive({
     width: 940
   }),
@@ -44,7 +51,7 @@ const generateData = (size=20) => Array(size).fill(undefined).map((_,i) => (
   Array(6).fill(undefined).reduce((r, _, j) => ({
     ...r, [`data${j+1}`]: `${Math.ceil(Math.random()*20)} in data[${i}, ${j+1}]`
   }), {})
-))
+)).concat({isEmpty: true});
 
 // define columns configuration
 const columns = [
@@ -230,8 +237,8 @@ const App = () => {
           fetching={fetching}
           fetch={fetch}
           className="default-theme"
-          defaultSortParameter="data1"
-          defaultSortDirection="asc"
+          // defaultSortParameter="data1"
+          // defaultSortDirection="asc"
           detailsRenderer={InlineDetails}
           columns={columns}
         >

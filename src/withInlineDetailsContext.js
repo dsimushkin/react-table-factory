@@ -13,9 +13,7 @@ const detailsRowRenderer = (
     Row=DefaultRowRenderer
 ) => {
     const RowWithDetals = ({
-        columns,
         className,
-        tableProps,
         ...props
     }) => {
         const {
@@ -26,10 +24,10 @@ const detailsRowRenderer = (
         } = useContext(DetailsContext);
         if (Details == null)
         {
-            return <DataRow {...{columns, className, tableProps, ...props}} />
+            return <DataRow {...{className, ...props}} />
         }
 
-        const { index } = props;
+        const { index, columns } = props;
 
         const onClick = () => toggle(index);
         const selected = isSelected(index);
@@ -49,16 +47,13 @@ const detailsRowRenderer = (
                         if (e.which === 13 && e.target.click) e.target.click();
                     } : undefined}
                     onClick={selectable ? onClick : undefined}
-                    columns={columns}
                     className={classNames.length > 0 ? classNames.join(' ') : undefined}
-                    tableProps={tableProps}
                 />
                 { selected ? (
                     <Row className="inline-details">
                         <td colSpan={columns.length}>
                             <Details
                                 {...props}
-                                {...tableProps}
                                 close={() => close(index)}
                             />
                         </td>

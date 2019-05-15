@@ -75,13 +75,13 @@ Some components can use css. Corresponding files should have the same base name.
 | `withAdaptive` (true) (will change) | {`Component`} | {}:{`removeAdaptiveColname`} | Injects a `Component` inside each cell. Adaptive layout should be handled using CSS rules. |
 | `withHeaderControl` (false) (will change) || {}:{`control`} | Adds 1 to colspan of each cell previous to column with `controll`. This component is used when you want to create an element in header, but doesn't effect the tbody cell layout. |
 | `withHeaderCellOverflow` (true) || {}:{`removeOverflowWrapper`} | Adds a set of wrapper around header cell contents. Overflow should be handled using css. |
+| `withEmptyRow` (falst) | {`isEmpty` = (rowProps)=>false, `Component`}:{} || Provides capabilities to implement empty td that spans the whole row |
 ---
 
 ## TODO
 - [ ] Add ColGroup Component.
 - [ ] Add tbody renderer option to table hoc.
 - [ ] Create decorator to add virtualization to withFixedHeader.
-- [ ] Rename withAdapticeColname.
 - [ ] Remove withHeaderControl for a more flexible decorator.
 - [ ] Create user guide to create new decorators and use existing.
 - [ ] Use react router for more usage examples.

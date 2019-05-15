@@ -1,4 +1,5 @@
 export * from './table';
+export * from './withEmptyRow';
 export * from './withAdaptive';
 export * from './withFixedHeader';
 export * from './withHeaderCellOverflow';
