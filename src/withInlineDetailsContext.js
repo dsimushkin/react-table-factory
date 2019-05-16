@@ -70,6 +70,7 @@ export const DetailsContext = React.createContext({
     detailsRenderer: () => null,
     close: index => {},
     toggle: index => {},
+    open: index => {},
     isSelected: index => true,
     clear: ()=> {},
     isSelectable: index => true,
@@ -140,6 +141,9 @@ export const withInlineDetailsContext = ({
                             },
                             isSelected: (index) => (
                                 selection.isSelected(keyFactory(data, index))
+                            ),
+                            open: (index) => (
+                                selection.add(keyFactory(data, index))
                             ),
                             clear: selection.clear,
                             detailsRenderer,

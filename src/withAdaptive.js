@@ -1,6 +1,6 @@
-import React, { forwardRef, useState, useEffect, useContext } from 'react';
+import React, { forwardRef, useState, useMemo, useContext } from 'react';
 
-import { table, DefaultDataCellRenderer, DefaultHeaderCellRenderer } from './table';
+import { table, DefaultDataCellRenderer, DefaultHeaderCellRenderer, DefaultCellRenderer } from './table';
 import { useMediaMaxWidth } from './hooks/useMediaMaxWidth';
 
 /**
@@ -14,6 +14,8 @@ const withColname = (Cell=DefaultDataCellRenderer, Component) => {
         header,
         name,
         removeAdaptiveColname=false,
+        hideFullSize,
+        hideAdaptive,
         ...props
     }, ref) => {
         const {isAdaptive} = useContext(AdaptiveContext);
@@ -49,13 +51,25 @@ const withColname = (Cell=DefaultDataCellRenderer, Component) => {
 const decorateHeaderCellRenderer = (Cell=DefaultHeaderCellRenderer) => (
     forwardRef(({
         removeAdaptiveColname,
+        hideFullSize,
+        hideAdaptive,
         ...props
-    }, ref) => (
-        <Cell
-            ref={ref}
-            {...props}
-        />
-    ))
+    }, ref) => {
+        const {isAdaptive} = useContext(AdaptiveContext);
+
+        if ((isAdaptive && hideAdaptive)
+            || (!isAdaptive && hideFullSize))
+        {
+            return null;
+        }
+
+        return (
+            <Cell
+                ref={ref}
+                {...props}
+            />
+        )
+    })
 )
 
 export const DefaultAdaptiveComponent = ({
@@ -93,6 +107,7 @@ export const withAdaptive = ({
 
     return forwardRef(({
             className,
+            columns,
             ...props
         },
         ref
@@ -109,10 +124,20 @@ export const withAdaptive = ({
         if (className != null) classNames.push(className);
         if (isAdaptive) classNames.push('adaptive-table');
 
+        const filteredColumns = useMemo(
+            () => columns.filter(({
+                hideAdaptive, hideFullSize
+            }) => (
+                (isAdaptive && !hideAdaptive) || (!isAdaptive && !hideFullSize)
+            )),
+            [isAdaptive]
+        )
+
         return (
             <AdaptiveContext.Provider value={{isAdaptive}}>
                 <Table
                     ref={ref}
+                    columns={filteredColumns}
                     className={classNames.length > 0 ? classNames.join(' ') : undefined}
                     {...props}
                 />
