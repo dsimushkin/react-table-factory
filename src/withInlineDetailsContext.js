@@ -14,6 +14,7 @@ const detailsRowRenderer = (
 ) => {
     const RowWithDetals = ({
         className,
+        tableProps,
         ...props
     }) => {
         const {
@@ -24,7 +25,7 @@ const detailsRowRenderer = (
         } = useContext(DetailsContext);
         if (Details == null)
         {
-            return <DataRow {...{className, ...props}} />
+            return <DataRow {...{className, tableProps, ...props}} />
         }
 
         const { index, columns } = props;
@@ -42,6 +43,7 @@ const detailsRowRenderer = (
             <React.Fragment>
                 <DataRow
                     {...props}
+                    tableProps={tableProps}
                     tabIndex={onClick && tabIndex ? tabIndex : undefined}
                     onKeyPress={selectable ? (e) => {
                         if (e.which === 13 && e.target.click) e.target.click();
@@ -54,6 +56,7 @@ const detailsRowRenderer = (
                         <td colSpan={columns.length}>
                             <Details
                                 {...props}
+                                {...tableProps}
                                 close={() => close(index)}
                             />
                         </td>
