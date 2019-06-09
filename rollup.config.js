@@ -1,6 +1,7 @@
-import resolve from 'rollup-plugin-node-resolve';
-import tslint from 'rollup-plugin-tslint';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from "rollup-plugin-typescript2";
+import commonjs from "rollup-plugin-commonjs";
+import resolve from "rollup-plugin-node-resolve";
+
 import fs from 'fs';
 import path from 'path';
 
@@ -24,25 +25,28 @@ const exports = {
     input: `src/index.ts`,
     output: [
         {
-            format: 'cjs',
-            file: pkg.main
-            // sourcemap: 'inline'
+          file: pkg.main,
+          format: "cjs",
+          exports: "named",
+          sourcemap: true
         },
-        // {
-        //     format: 'umd',
-        //     name: 'ReactTableFactory',
-        //     file: `dist/index.js`,
-        //     globals: {
-        //       react: 'React',
-        //     },
-        // }
+        {
+          file: pkg.module,
+          format: "es",
+          exports: "named",
+          sourcemap: true
+        },
     ],
     external: Object.keys(pkg.peerDependencies || {}),
     plugins: [
         resolve(),
-        tslint(),
-        typescript(),
-        // copyCssPlugin
+        typescript({
+          rollupCommonJSResolveHack: true,
+          exclude: "**/__tests__/**",
+          clean: true
+        }),
+        commonjs(),
+        copyCssPlugin
     ]
 }
 

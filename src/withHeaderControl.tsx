@@ -9,7 +9,7 @@ export const Controll = () => null;
  * 
  * @param {*} Cell 
  */
-const decorateCellRenderer = (Cell=DefaultCellRenderer) => forwardRef(({
+const decorateCellRenderer = (Cell = DefaultCellRenderer) => forwardRef(({
     colSpan,
     ...props
 }, ref) => {

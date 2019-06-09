@@ -12,11 +12,19 @@ import { useTotalScroll } from './hooks/useTotalScroll';
  */
 export const withLazyLoading = ({
     Loading=() => 'Loading',
+    NoDataComponent,
     threshold=50
 }={}) => (tableFactory=table) => (options) => {
     const Table = tableFactory(options);
 
-    return forwardRef(({fetch, fetching, children, ...props}, ref) => {
+    return forwardRef(({
+        fetch,
+        fetching,
+        fetched,
+        children,
+        data,
+        ...props
+    }, ref) => {
         const tableRef = useRef();
         useImperativeHandle(ref, () => tableRef.current);
 
@@ -40,13 +48,21 @@ export const withLazyLoading = ({
 
         useTotalScroll(anotherRef, fetchIfNeeded, threshold);
 
+        let Component = null;
+        if (fetching) Component = Loading;
+        if (fetched && NoDataComponent != null && (data == null || data .length === 0))
+        {
+            Component = NoDataComponent;
+        }
+
         return (
             <Table
                 ref={tableRef}
+                data={data}
                 {...props}
             >
                 { children }
-                { fetching ? <Loading /> : null}
+                { Component != null ? <Component {...props}/> : null}
             </Table>
         )
     })

@@ -16,12 +16,19 @@ import {
   DetailsContext,
   SortableContext,
   withHeaderControl,
-  withLazyLoading
+  withLazyLoading,
+  withEmptyRow
 } from 'react-table-factory';
 
 const Table = composeDecorators(
   withHeaderControl,
   withHeaderCellOverflow,
+  withEmptyRow({
+    isEmpty: ({data}) => data.isEmpty,
+    Component: () => (
+      <div style={{textAlign: 'center'}}>Empty row</div>
+    )
+  }),
   withAdaptive({
     width: 940
   }),
@@ -44,7 +51,7 @@ const generateData = (size=20) => Array(size).fill(undefined).map((_,i) => (
   Array(6).fill(undefined).reduce((r, _, j) => ({
     ...r, [`data${j+1}`]: `${Math.ceil(Math.random()*20)} in data[${i}, ${j+1}]`
   }), {})
-))
+)).concat({isEmpty: true});
 
 // define columns configuration
 const columns = [
@@ -60,12 +67,13 @@ const columns = [
       ),
       cell: ({data}) => (
         <React.Fragment>
-          <span>A very very very very very long description cell with some data: {data.data2}</span>
+          <span>A very long description cell hidden in full size and with no col name in adaptive: {data.data2}</span>
         </React.Fragment>
       ),
       style: {width: '30%'},
       sortable: true,
-      removeAdaptiveColname: true
+      removeAdaptiveColname: true,
+      hideFullSize: true,
   },
   {
     sortable: true,
@@ -87,13 +95,13 @@ const columns = [
         <span>Data 4 Not sortable and without overflow wrapper</span>
       ),
       sortable: false,
-      removeOverflowWrapper: true
+      removeOverflowWrapper: true,
   },
   {
       name: ['data5', 'data6'],
       header: ({disabled}) => (
         <React.Fragment>
-          <div>With multisort</div>
+          <div>With multisort (hidden in adaptive)</div>
           <Sorter name="data5" disabled={disabled} Component="span">
             Data 5
           </Sorter>
@@ -109,7 +117,8 @@ const columns = [
           <div>{data['data6']}</div>
         </div>
       ),
-      style: {width: '30%'},
+      style: {width: '500px'},
+      hideAdaptive: true
   },
   {
     header: () => (
@@ -230,8 +239,8 @@ const App = () => {
           fetching={fetching}
           fetch={fetch}
           className="default-theme"
-          defaultSortParameter="data1"
-          defaultSortDirection="asc"
+          // defaultSortParameter="data1"
+          // defaultSortDirection="asc"
           detailsRenderer={InlineDetails}
           columns={columns}
         >

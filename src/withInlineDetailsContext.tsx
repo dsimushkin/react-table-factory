@@ -13,7 +13,6 @@ const detailsRowRenderer = (
     Row=DefaultRowRenderer
 ) => {
     const RowWithDetals = ({
-        columns,
         className,
         tableProps,
         ...props
@@ -26,10 +25,10 @@ const detailsRowRenderer = (
         } = useContext(DetailsContext);
         if (Details == null)
         {
-            return <Row {...{columns, className, ...props}} />
+            return <DataRow {...{className, tableProps, ...props}} />
         }
 
-        const { index } = props;
+        const { index, columns } = props;
 
         const onClick = () => toggle(index);
         const selected = isSelected(index);
@@ -44,14 +43,13 @@ const detailsRowRenderer = (
             <React.Fragment>
                 <DataRow
                     {...props}
+                    tableProps={tableProps}
                     tabIndex={onClick && tabIndex ? tabIndex : undefined}
                     onKeyPress={selectable ? (e) => {
                         if (e.which === 13 && e.target.click) e.target.click();
                     } : undefined}
                     onClick={selectable ? onClick : undefined}
-                    columns={columns}
                     className={classNames.length > 0 ? classNames.join(' ') : undefined}
-                    tableProps={tableProps}
                 />
                 { selected ? (
                     <Row className="inline-details">
@@ -75,6 +73,7 @@ export const DetailsContext = React.createContext({
     detailsRenderer: () => null,
     close: index => {},
     toggle: index => {},
+    open: index => {},
     isSelected: index => true,
     clear: ()=> {},
     isSelectable: index => true,
@@ -102,17 +101,19 @@ export const withInlineDetailsContext = ({
 }={}) => (tableFactory=table) => ({
     dataRowRenderer,
     rowRenderer,
-    ...props
+    ...options
 }={}) => {
     const Table = tableFactory({
         dataRowRenderer: detailsRowRenderer(dataRowRenderer, rowRenderer),
         rowRenderer,
-        ...props
+        ...options
     })
 
     return (
         selectionContext(selectionReducer, forwardRef(({
-            data, detailsRenderer, ...props
+            data,
+            detailsRenderer,
+            ...props
         }, ref) => {
                 const selection = useContext(SelectionContext);
                 
@@ -143,6 +144,9 @@ export const withInlineDetailsContext = ({
                             },
                             isSelected: (index) => (
                                 selection.isSelected(keyFactory(data, index))
+                            ),
+                            open: (index) => (
+                                selection.add(keyFactory(data, index))
                             ),
                             clear: selection.clear,
                             detailsRenderer,
