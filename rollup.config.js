@@ -23,18 +23,17 @@ const exports = {
     input: `src/index.js`,
     output: [
         {
-            format: 'cjs',
-            file: `dist/index.js`,
-            // sourcemap: 'inline'
+          file: pkg.main,
+          format: "cjs",
+          exports: "named",
+          sourcemap: true
         },
-        // {
-        //     format: 'umd',
-        //     name: 'ReactTableFactory',
-        //     file: `dist/index.js`,
-        //     globals: {
-        //       react: 'React',
-        //     },
-        // }
+        {
+          file: pkg.module,
+          format: "es",
+          exports: "named",
+          sourcemap: true
+        },
     ],
     external: Object.keys(pkg.peerDependencies || {}),
     plugins: [

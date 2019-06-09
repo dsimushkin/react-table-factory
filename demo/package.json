@@ -4,10 +4,10 @@
   "homepage": "http://dsimushkin.github.io/react-table-factory/",
   "private": true,
   "dependencies": {
-    "node-sass": "^4.11.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-scripts": "2.1.5",
+    "node-sass": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
     "react-table-factory": "latest"
   },
   "scripts": {
@@ -28,6 +28,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "^2.0.1"
+    "gh-pages": "latest",
+    "typescript": "latest"
   }
 }
