@@ -29,6 +29,6 @@
   ],
   "devDependencies": {
     "gh-pages": "latest",
-    "typescript": "latest"
+    "typescript": "^3.5.3"
   }
 }
