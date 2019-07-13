@@ -124,7 +124,7 @@ const columns = [
     header: () => (
       <span>Cell indexies</span>
     ),
-    cell: ({index, rowIndex}) => {
+    cell: function IndexiesCell({index, rowIndex}) {
       const {isSelectable, isSelected} = useContext(DetailsContext);
       return (
         <React.Fragment>
@@ -177,6 +177,7 @@ const EnhanceTableBehaviour = () => {
         selection.clear();
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sorting.sortOrder]
   )
 
@@ -223,7 +224,9 @@ const App = () => {
       return () => {
         clearTimeout(timeout);
       }
-    }, []
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
   return (
