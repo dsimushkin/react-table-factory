@@ -8326,10 +8326,10 @@ react-scripts@latest:
   optionalDependencies:
     fsevents "2.0.6"
 
-react-table-factory@0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/react-table-factory/-/react-table-factory-0.2.3.tgz#2efbba62c81d2c79145a4ba62bd165c279259af6"
-  integrity sha512-MbR0JpNU8bC5IvYCZDczWDlWyXQsPd6Y8+hr1sx/DHGB3D1gFi28N0U9AKhOsolknph0K7pyh3tfaDr5Jd7ONg==
+react-table-factory@latest:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-table-factory/-/react-table-factory-0.2.4.tgz#90c881eb57b0931f00c95e6087ced10bede1e35f"
+  integrity sha512-ImFpaACrqhj+bq9WZzbIaOwxX7FXE6PrJxi++uN1pDeBSuYbv1FVfTdJcT1ixFRHEZBMzYnh81Lu+C9O0OOsew==
 
 react@latest:
   version "16.8.6"
