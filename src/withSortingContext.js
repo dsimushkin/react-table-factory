@@ -113,10 +113,10 @@ export const withSortingContext = ({
             return (
                 <Table
                     ref={ref}
-                    columns={columns.map(({name, ...props}) => ({
-                        name: Array.isArray(name) ? sortParameterFactory(sortOrder)(...name) : name,
-                        ...props
-                    }))}
+                    columns={columns.map(({name: names, ...props}) => {
+                        const name = Array.isArray(names) ? sortParameterFactory(sortOrder)(...names) : names;
+                        return { name, ...props };
+                    })}
                     {...props}
                 />
             )

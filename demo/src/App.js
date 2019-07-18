@@ -117,6 +117,7 @@ const columns = [
           <div>{data['data6']}</div>
         </div>
       ),
+      sortable: true,
       style: {width: '500px'},
       hideAdaptive: true
   },
