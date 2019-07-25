@@ -38,7 +38,7 @@ const clickableRow = (
       <DataRow
         {...props}
         ref={ref}
-        tabIndex={tabIndex || tabIndexDefault}
+        tabIndex={tabIndex != null ? tabIndex : tabIndexDefault}
         onClick={clickable ? (e) => {
           onClick(props.index, e);
         } : undefined}
