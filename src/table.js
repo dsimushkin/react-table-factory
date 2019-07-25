@@ -181,6 +181,6 @@ export const table = ({
     )
 })
 
-export const composeDecorators = (...hocFactories) => (tableHoc=table) => (
-    hocFactories.reverse().reduce((r, h) => h(r), tableHoc)()
+export const composeDecorators = (...hocFactories) => (tableHoc=table, config) => (
+    hocFactories.reverse().reduce((r, h) => h(r), tableHoc)(config)
 )

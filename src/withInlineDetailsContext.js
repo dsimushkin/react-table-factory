@@ -6,7 +6,8 @@ import { selectionContext, SelectionContext, singleSelectionReducer } from './ho
 /**
  * Table dataRowRenderer decorator HoC.
  * 
- * @param {*} Row - dataRowRenderer
+ * @param {*} Row - rowRenderer
+ * @param {*} DataRow - dataRowRenderer
  */
 const detailsRowRenderer = (
     DataRow=DefaultDataRowRenderer,
@@ -88,8 +89,8 @@ export const DetailsContext = React.createContext({
  * 
  * Injects the context.
  * Overrides row renderer to inject details into the table.
+ * Overrides tabIndex, onClick and onKeyPress from table dataRowProps attribute.
  * 
- * @param {*} TableComponent
  * @param {*} selectionReducer -- a reducer used by SelectionContext. 
  */
 export const withInlineDetailsContext = ({

@@ -7,5 +7,6 @@ export * from './withHeaderControl';
 export * from './withInlineDetailsContext';
 export * from './withLazyLoading';
 export * from './withSortingContext';
+export * from './withClickableRowContext';
 export * from './hocs/sortableHoc';
 export * from './hocs/withSelection';
