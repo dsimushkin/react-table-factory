@@ -23,5 +23,5 @@
 /* dirty hack */
 .scrollable-table .scrollable-table-content th {
     position: relative;
-    top: -100000px;
+    opacity: 0;
 }

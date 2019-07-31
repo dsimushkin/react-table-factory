@@ -3,7 +3,8 @@ import { table, DefaultDataRowRenderer, DefaultRowRenderer } from "./table";
 
 export const EmptyRowContext = React.createContext({
     isEmpty: () => false,
-    emptyRowContentRenderer: () => null
+    emptyRowContentRenderer: () => null,
+    classNameFactory: () => 'empty-row'
 });
 
 /**
@@ -16,10 +17,10 @@ const rowEnhancer = (
     Row=DefaultRowRenderer
 ) => {
     const EmptyRowRenderer = (props) => {
-        const { isEmpty, Component } = useContext(EmptyRowContext);
+        const { isEmpty, Component, classNameFactory } = useContext(EmptyRowContext);
 
         return Component != null && isEmpty(props) ? (
-            <Row className="empty-row">
+            <Row className={classNameFactory(props)}>
                 <td colSpan={props.columns.length}>
                     <Component {...props}/>
                 </td>
@@ -44,7 +45,8 @@ const rowEnhancer = (
 
 export const withEmptyRow = ({
     isEmpty=({data})=>false,
-    Component=()=>null
+    Component=()=>null,
+    classNameFactory=(dataRowProps)=>'empty-row'
 }={}) => (tableFactory = table) => ({
     dataRowRenderer,
     rowRenderer,
@@ -61,7 +63,8 @@ export const withEmptyRow = ({
         <EmptyRowContext.Provider
             value={{
                 isEmpty,
-                Component
+                Component,
+                classNameFactory
             }}
         >
             <Table ref={ref} {...props} />
