@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "yarn unlink react-table-factory && yarn install --force && yarn build",
+    "predeploy": "yarn unlink react-table-factory && yarn upgrade react-table-factory --force && yarn build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
