@@ -22,7 +22,7 @@ main {
 
 .App-header {
   background-color: #282c34;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -32,4 +32,8 @@ main {
 
 .App-link {
   color: #61dafb;
+}
+
+hr {
+  border-width: 0.25px;
 }

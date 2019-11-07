@@ -1,16 +1,17 @@
-import React, { useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useContext, useReducer } from "react";
 
-import './App.css';
+import "./App.css";
 
 // import the styles
-import './Table.scss';
+import "./Table.scss";
 
 // import table factory decorators
-import { 
+import {
   composeDecorators,
   withHeaderCellOverflow,
   withAdaptive,
-  withInMemorySortingContext, Sorter,
+  withInMemorySortingContext,
+  Sorter,
   withInlineDetailsContext,
   withFixedHeader,
   DetailsContext,
@@ -18,25 +19,26 @@ import {
   withHeaderControl,
   withLazyLoading,
   withEmptyRow
-} from 'react-table-factory';
+} from "react-table-factory";
 
 const Table = composeDecorators(
   withHeaderControl,
   withHeaderCellOverflow,
   withEmptyRow({
-    isEmpty: ({data}) => data.isEmpty,
-    Component: () => (
-      <div style={{textAlign: 'center'}}>Empty row</div>
-    )
+    isEmpty: ({ data }) => data.isEmpty,
+    Component: () => <div style={{ textAlign: "center" }}>Empty row</div>
   }),
   withAdaptive({
     width: 940
   }),
   withInMemorySortingContext({
-    defaultDirection: 'desc'
+    defaultDirection: "desc"
   }),
   withLazyLoading({
-    Loading: () => <div style={{textAlign: 'center', padding: 20}}>Fetching</div>,
+    threshold: 500,
+    Loading: () => (
+      <div style={{ textAlign: "center", padding: 20 }}>Loading</div>
+    )
   }),
   withInlineDetailsContext({
     isSelectable: (data, index) => index % 3 === 0 || index % 3 === 1,
@@ -44,129 +46,136 @@ const Table = composeDecorators(
     clearOnDataChange: false
   }),
   withFixedHeader // should be last
-)()
+)();
 
 // mock data
-const generateData = (size=20) => Array(size).fill(undefined).map((_,i) => (
-  Array(6).fill(undefined).reduce((r, _, j) => ({
-    ...r, [`data${j+1}`]: `${Math.ceil(Math.random()*20)} in data[${i}, ${j+1}]`
-  }), {})
-)).concat({isEmpty: true});
+const generateData = (size = 20) =>
+  Array(size)
+    .fill(undefined)
+    .map((_, i) =>
+      Array(6)
+        .fill(undefined)
+        .reduce(
+          (r, _, j) => ({
+            ...r,
+            [`data${j + 1}`]: `${Math.ceil(
+              Math.random() * 20
+            )} in data[${i}, ${j + 1}]`
+          }),
+          {}
+        )
+    )
+    .concat({ isEmpty: true });
 
 // define columns configuration
 const columns = [
   {
-      name: 'data1',
-      style: {width: '30%'},
-      sortable: true,
+    name: "data1",
+    style: { width: "30%" },
+    sortable: true
   },
   {
-      name: 'Description',
-      header: () => (
-        <span>Description</span>
-      ),
-      cell: ({data}) => (
-        <React.Fragment>
-          <span>A very long description cell hidden in full size and with no col name in adaptive: {data.data2}</span>
-        </React.Fragment>
-      ),
-      style: {width: '30%'},
-      sortable: true,
-      removeAdaptiveColname: true,
-      hideFullSize: true,
+    name: "Description",
+    header: () => <span>Description</span>,
+    cell: ({ data }) => (
+      <React.Fragment>
+        <span>
+          A very long description cell hidden in full size and with no col name
+          in adaptive: {data.data2}
+        </span>
+      </React.Fragment>
+    ),
+    style: { width: "30%" },
+    sortable: true,
+    removeAdaptiveColname: true,
+    hideFullSize: true
   },
   {
     sortable: true,
-    name: 'data3',
+    name: "data3",
     header: () => (
-      <span style={{whiteSpace: 'nowrap'}}>Very long name for displaying data 3</span>
+      <span style={{ whiteSpace: "nowrap" }}>
+        Very long name for displaying data 3
+      </span>
     ),
-    cell: ({data}) => (
+    cell: ({ data }) => (
       <React.Fragment>
-        <span>some text and {data['data3']}</span>
+        <span>some text and {data["data3"]}</span>
       </React.Fragment>
     ),
-    style: {width: '10%'},
+    style: { width: "10%" }
   },
   {
-      name: 'data4',
-      style: {width: '12%'},
-      header: () => (
-        <span>Data 4 Not sortable and without overflow wrapper</span>
-      ),
-      sortable: false,
-      removeOverflowWrapper: true,
+    name: "data4",
+    style: { width: "12%" },
+    header: () => <span>Data 4 Not sortable and without overflow wrapper</span>,
+    sortable: false,
+    removeOverflowWrapper: true
   },
   {
-      name: ['data5', 'data6'],
-      header: ({disabled}) => (
-        <React.Fragment>
-          <div>With multisort (hidden in adaptive)</div>
-          <Sorter name="data5" disabled={disabled} Component="span">
-            Data 5
-          </Sorter>
-          ,
-          <Sorter name="data6" disabled={disabled} Component="span">
-            Data 6
-          </Sorter>
-        </React.Fragment>
-      ),
-      cell: ({data}) => (
-        <div className="multi-line">
-          <div>{data.data5}</div>
-          <div>{data['data6']}</div>
-        </div>
-      ),
-      sortable: true,
-      style: {width: '500px'},
-      hideAdaptive: true
-  },
-  {
-    header: () => (
-      <span>Cell indexies</span>
+    name: ["data5", "data6"],
+    header: ({ disabled }) => (
+      <React.Fragment>
+        <div>With multisort (hidden in adaptive)</div>
+        <Sorter name="data5" disabled={disabled} Component="span">
+          Data 5
+        </Sorter>
+        ,
+        <Sorter name="data6" disabled={disabled} Component="span">
+          Data 6
+        </Sorter>
+      </React.Fragment>
     ),
-    cell: function IndexiesCell({index, rowIndex}) {
-      const {isSelectable, isSelected} = useContext(DetailsContext);
+    cell: ({ data }) => (
+      <div className="multi-line">
+        <div>{data.data5}</div>
+        <div>{data["data6"]}</div>
+      </div>
+    ),
+    sortable: true,
+    style: { width: "500px" },
+    hideAdaptive: true
+  },
+  {
+    header: () => <span>Cell indexies</span>,
+    cell: function IndexiesCell({ index, rowIndex }) {
+      const { isSelectable, isSelected } = useContext(DetailsContext);
       return (
         <React.Fragment>
           <span>{`[${rowIndex},${index}]`}</span>
-          <span style={{marginLeft: 10}}>{
-            isSelected(rowIndex)
-              ? 'selected'
-              : (
-                isSelectable(rowIndex)
-                  ? 'selectable'
-                  : 'not selectable'
-                )
-            }</span>
+          <span style={{ marginLeft: 10 }}>
+            {isSelected(rowIndex)
+              ? "selected"
+              : isSelectable(rowIndex)
+              ? "selectable"
+              : "not selectable"}
+          </span>
         </React.Fragment>
-      )
+      );
     },
-    style: {minWidth: '80px'},
+    style: { minWidth: "80px" },
     removeOverflowWrapper: true
   },
   {
     header: () => <span>Hello</span>,
     control: true,
-    style: {minWidth: 100}
+    style: { minWidth: 100 }
   }
-]
+];
 
-const InlineDetails = ({data, index}) => {
+const InlineDetails = ({ data, index }) => {
   return (
     <div>
-      <p>
-        Details of row {index}
-      </p>
-      { Object.keys(data).map((key, i) => (
+      <p>Details of row {index}</p>
+      {Object.keys(data).map((key, i) => (
         <p key={i}>
           <label>{key} : </label>
           <span>{data[key]}</span>
         </p>
-      )) }
+      ))}
     </div>
-  )
-}
+  );
+};
 
 const EnhanceTableBehaviour = () => {
   const selection = useContext(DetailsContext);
@@ -180,62 +189,58 @@ const EnhanceTableBehaviour = () => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [sorting.sortOrder]
-  )
+  );
 
   return null;
-}
+};
 
 const requestsReducer = (state, action) => {
-  switch(action.type) {
-    case '@fetch':
+  switch (action.type) {
+    case "@fetch":
       return {
         ...state,
         fetching: true
-      }
-    case '@add':
+      };
+    case "@add":
       return {
         ...state,
         data: [...state.data, ...action.value],
         fetching: false
-      }
+      };
     default:
       return state;
   }
-}
+};
 
 const App = () => {
-  const [{data, fetching}, dispatch] = useReducer(
-    requestsReducer, {
-      data: generateData(20),
-      fetching: false
-    }
-  );
+  const [{ data, fetching }, dispatch] = useReducer(requestsReducer, {
+    data: generateData(20),
+    fetching: false
+  });
 
   let timeout;
   const fetch = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      dispatch({type: '@add', value: generateData(20)});
-    }, 2000);
-    dispatch({type: '@fetch'});
-  }
+      dispatch({ type: "@add", value: generateData(20) });
+    }, 50);
+    dispatch({ type: "@fetch" });
+  };
 
   useEffect(
     () => {
       return () => {
         clearTimeout(timeout);
-      }
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
-  )
+  );
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Table example
-        </p>
+        <p>Table example</p>
       </header>
       <main>
         <Table
@@ -253,6 +258,6 @@ const App = () => {
       </main>
     </div>
   );
-}
+};
 
 export default App;

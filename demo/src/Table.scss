@@ -1,55 +1,53 @@
 /* Inject styles */
-@import '~react-table-factory/styles/withFixedHeader';
-@import '~react-table-factory/styles/withHeaderCellOverflow';
-@import '~react-table-factory/styles/withSortingContext';
-@import '~react-table-factory/styles/withInlineDetailsContext';
-@import '~react-table-factory/styles/table';
-@import '~react-table-factory/styles/withAdaptive';
+@import "~react-table-factory/styles/withFixedHeader";
+@import "~react-table-factory/styles/withHeaderCellOverflow";
+@import "~react-table-factory/styles/withSortingContext";
+@import "~react-table-factory/styles/withInlineDetailsContext";
+@import "~react-table-factory/styles/table";
+@import "~react-table-factory/styles/withAdaptive";
 
 @media all and (max-width: 940px) {
-    .scrollable-table {
-        .multi-line {
-            display: inline-flex;
-            justify-content: flex-end;
-            
-            div + div::before  {
-                content: ',';
-                margin-right: 5px;
-            }
-        }
+  .scrollable-table {
+    .multi-line {
+      display: inline-flex;
+      justify-content: flex-end;
+
+      div + div::before {
+        content: ",";
+        margin-right: 5px;
+      }
     }
+  }
+}
+
+@media all and (min-width: 941px) {
+  .selectable-row:not(.selected-row):hover,
+  .selected-row {
+    animation: rotate 0.3s ease-out;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotateX(30deg);
+    }
+    50% {
+      transform: rotateX(60deg);
+    }
+    100% {
+      transform: rotateX(0);
+    }
+  }
 }
 
 /* Add effects (not necessary) */
 .selectable-row {
-    perspective: 40em;
-    transform: rotateX(0);
-    // transition: color .1s linear;
-}
-
-@media all and (min-width: 941px) {
-    .selectable-row:not(.selected-row):hover,
-    .selected-row
-    {
-        animation: rotate .3s ease-out;
-    }
-
-    @keyframes rotate {
-        0% {
-            transform: rotateX(30deg);
-        }
-        50% {
-            transform: rotateX(60deg);
-        }
-        100% {
-            transform: rotateX(0);
-        }
-    }
+  perspective: 40em;
+  transform: rotateX(0);
+  // transition: color .1s linear;
 }
 
 .selectable-row:not(.selected-row):hover,
-.selected-row
-{
-    animation: rotate .3s ease-out;
-    color: rgb(52, 121, 241);
+.selected-row {
+  animation: rotate 0.3s ease-out;
+  color: rgb(52, 121, 241);
 }

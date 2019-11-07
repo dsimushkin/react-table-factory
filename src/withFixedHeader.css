@@ -10,6 +10,7 @@
 .scrollable-table > .scrollable-table-content {
     position: relative;
     overflow-y: auto;
+    overflow-anchor: none;
     top: var(--cell-height);
     height: 100%;
 }
