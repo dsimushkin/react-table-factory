@@ -25,7 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
-    "@babel/preset-react": "latest",
+    "@babel/preset-react": "^7.7.0",
     "react": "link:demo/node_modules/react",
     "rollup": "^1.16.7",
     "rollup-plugin-babel": "^4.3.3",

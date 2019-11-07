@@ -4,10 +4,10 @@
   "homepage": "http://dsimushkin.github.io/react-table-factory/",
   "private": true,
   "dependencies": {
-    "node-sass": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-scripts": "latest",
+    "node-sass": "^4.13.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "^3.2.0",
     "react-table-factory": "^0.2.8"
   },
   "scripts": {
@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "rmlink": "yarn unlink react-table-factory && yarn install --force && yarn upgrade react-table-factory",
+    "rmlink": "yarn unlink react-table-factory && yarn install --force && yarn upgrade",
     "predeploy": "yarn rmlink && yarn build",
     "deploy": "gh-pages -d build"
   },
@@ -29,7 +29,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "latest",
+    "gh-pages": "^2.1.1",
     "typescript": "^3.5.3"
   }
 }
