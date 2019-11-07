@@ -16,14 +16,14 @@ import { is } from "./utils/helpers";
  * @param {*} Loading
  */
 export const withLazyLoading = ({
-  Loading = ({ fetching }) => (fetching ? "Loading" : null),
+  Loading = () => "Loading",
   NoDataComponent,
   threshold = 50
 } = {}) => (tableFactory = table) => options => {
   const Table = tableFactory(options);
 
   return forwardRef(
-    ({ fetch, fetching, fetchable, children, data, ...props }, outerRef) => {
+    ({ fetch, fetching = false, fetchable = true, children, data, ...props }, outerRef) => {
       const tableRef = useRef();
       useImperativeHandle(outerRef, () => tableRef.current);
 
@@ -55,20 +55,17 @@ export const withLazyLoading = ({
         };
       });
 
-      let Component = Loading;
-      if (
-        !fetching &&
-        !fetchable &&
-        (data == null || data.length === 0) &&
-        NoDataComponent != null
-      ) {
+      let Component = null;
+      if (fetching) {
+        Component = Loading;
+      } else if (!fetchable && (data == null || data.length === 0)) {
         Component = NoDataComponent;
       }
 
       return (
         <Table ref={tableRef} data={data} {...props}>
           {children}
-          {Component != null ? <Component fetching={fetching} /> : null}
+          {Component != null ? <Component /> : null}
         </Table>
       );
     }
