@@ -8327,9 +8327,9 @@ react-scripts@latest:
     fsevents "2.0.6"
 
 react-table-factory@^0.2.8:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/react-table-factory/-/react-table-factory-0.2.8.tgz#e8c53932142effceb49af6b434593ba9c7cb50fb"
-  integrity sha512-CaeNJzPfz8Guz7+GXYsOXMIbvB47VIlnK+8m4ZjS3t4IG7VRV0Z41DxuvEoDR135X3oY9dKzu9kMJTug+mitFg==
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/react-table-factory/-/react-table-factory-0.2.9.tgz#2f6605405376b56ad001c5a2ce1a28e0bbdc582f"
+  integrity sha512-Y4E1+NVVJxk8TD4A0ixZ2MUsTFHz+ntdfOltQe8Zerhzz2bt1S0chKmXVoVd9No/4sRuGAsF4G2BSxFYcgLEtw==
 
 react@latest:
   version "16.8.6"

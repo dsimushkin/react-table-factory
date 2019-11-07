@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "rmlink": "yarn unlink react-table-factory && yarn upgrade react-table-factory --force",
+    "rmlink": "yarn unlink react-table-factory && yarn install --force && yarn upgrade react-table-factory",
     "predeploy": "yarn rmlink && yarn build",
     "deploy": "gh-pages -d build"
   },
