@@ -1,69 +1,68 @@
-import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
+import React, {
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  useEffect
+} from "react";
 
-import { table } from './table';
-import { useTotalScroll } from './hooks/useTotalScroll';
+import { table } from "./table";
 
 /**
  * HoC for adding Loading Component as a last child of a Table
  * if fetching is truthy and calling fetch when the table in scrolled to bottom
  * and fetching is falsy.
- * 
- * @param {*} Loading 
+ *
+ * @param {*} Loading
  */
 export const withLazyLoading = ({
-    Loading=() => 'Loading',
-    NoDataComponent,
-    threshold=50
-}={}) => (tableFactory=table) => (options) => {
-    const Table = tableFactory(options);
+  Loading = () => "Loading",
+  NoDataComponent,
+  threshold = 50
+} = {}) => (tableFactory = table) => options => {
+  const Table = tableFactory(options);
 
-    return forwardRef(({
-        fetch,
-        fetching,
-        fetched,
-        children,
-        data,
-        ...props
-    }, ref) => {
-        const tableRef = useRef();
-        useImperativeHandle(ref, () => tableRef.current);
+  return forwardRef(({ fetch, fetching, children, data, ...props }, outerRef) => {
+    const tableRef = useRef();
+    useImperativeHandle(outerRef, () => tableRef.current);
 
-        // execute only first fetch request
-        let timeout;
-        const fetchIfNeeded = () => {
-            if (timeout == null) {
-                timeout = setTimeout(() => {
-                    if (!fetching && fetch) {
-                        fetch();
-                    }
-                }, 0);
-            }
+    const ref = useRef();
+    useImperativeHandle(ref, () => tableRef.current.scrollContainer);
+
+    useEffect(() => {
+      function listener(e) {
+        const { scrollHeight, scrollTop, clientHeight } = e.target;
+        if (scrollTop + clientHeight + threshold >= scrollHeight) {
+          if (!fetching && fetch) {
+            e.target.removeEventListener("scroll", listener);
+            fetch();
+          }
         }
-
-        // clear any existing timeouts on unmount
-        useEffect(() => () => clearTimeout(timeout), []);
-
-        const anotherRef = useRef();
-        useImperativeHandle(anotherRef, () => tableRef.current.scrollContainer)
-
-        useTotalScroll(anotherRef, fetchIfNeeded, threshold);
-
-        let Component = null;
-        if (fetching) Component = Loading;
-        if (fetched && NoDataComponent != null && (data == null || data .length === 0))
-        {
-            Component = NoDataComponent;
+      };
+      
+      const node = ref && ref.current;
+      if (!fetching && fetch && node && node.addEventListener) {
+        node.addEventListener("scroll", listener);
+      }
+  
+      return () => {
+        if (node && node.removeEventListener) {
+          node.removeEventListener("scroll", listener);
         }
+      }
+    }, [fetching]);
 
-        return (
-            <Table
-                ref={tableRef}
-                data={data}
-                {...props}
-            >
-                { children }
-                { Component != null ? <Component {...props}/> : null}
-            </Table>
-        )
-    })
-}
+    let Component = null;
+    if (fetching) {
+      Component = Loading;
+    } else if (NoDataComponent != null && (data == null || data.length === 0)) {
+      Component = NoDataComponent;
+    }
+
+    return (
+      <Table ref={tableRef} data={data} {...props}>
+        {children}
+        {Component != null ? <Component {...props} /> : null}
+      </Table>
+    );
+  });
+};

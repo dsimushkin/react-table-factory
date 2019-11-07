@@ -223,7 +223,7 @@ const App = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       dispatch({ type: "@add", value: generateData(20) });
-    }, 50);
+    }, 500);
     dispatch({ type: "@fetch" });
   };
 
