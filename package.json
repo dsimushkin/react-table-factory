@@ -1,6 +1,6 @@
 {
   "name": "react-table-factory",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "React table factory HoC with a set of wrapper HoCs",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
