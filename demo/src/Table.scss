@@ -1,10 +1,10 @@
 /* Inject styles */
-@import "~react-table-factory/styles/withFixedHeader";
-@import "~react-table-factory/styles/withHeaderCellOverflow";
-@import "~react-table-factory/styles/withSortingContext";
-@import "~react-table-factory/styles/withInlineDetailsContext";
-@import "~react-table-factory/styles/table";
-@import "~react-table-factory/styles/withAdaptive";
+@import "react-table-factory/styles/withFixedHeader";
+@import "react-table-factory/styles/withHeaderCellOverflow";
+@import "react-table-factory/styles/withSortingContext";
+@import "react-table-factory/styles/withInlineDetailsContext";
+@import "react-table-factory/styles/table";
+@import "react-table-factory/styles/withAdaptive";
 
 @media all and (max-width: 940px) {
   .scrollable-table {

@@ -4,23 +4,15 @@
   "homepage": "http://dsimushkin.github.io/react-table-factory/",
   "private": true,
   "dependencies": {
-    "node-sass": "^4.13.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-scripts": "^3.2.0",
-    "react-table-factory": "^0.2.8"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "rmlink": "yarn unlink react-table-factory && yarn install --force && yarn upgrade",
-    "predeploy": "yarn rmlink && yarn build",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "start": "vite",
+    "build": "vite build",
+    "rmlink": "npm unlink react-table-factory && npm install --force && npm upgrade",
+    "predeploy": "npm run-script rmlink && npm run-script build",
+    "deploy": "gh-pages -d dist"
   },
   "browserslist": [
     ">0.2%",
@@ -29,7 +21,15 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "^2.1.1",
-    "typescript": "^3.5.3"
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "gh-pages": "^5.0.0",
+    "sass": "^1.62.1",
+    "vite": "^4.3.2"
   }
 }

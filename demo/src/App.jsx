@@ -115,7 +115,7 @@ const columns = [
   {
     name: ["data5", "data6"],
     header: ({ disabled }) => (
-      <React.Fragment>
+      <>
         <div>With multisort (hidden in adaptive)</div>
         <Sorter name="data5" disabled={disabled} Component="span">
           Data 5
@@ -124,7 +124,7 @@ const columns = [
         <Sorter name="data6" disabled={disabled} Component="span">
           Data 6
         </Sorter>
-      </React.Fragment>
+      </>
     ),
     cell: ({ data }) => (
       <div className="multi-line">
@@ -141,7 +141,7 @@ const columns = [
     cell: function IndexiesCell({ index, rowIndex }) {
       const { isSelectable, isSelected } = useContext(DetailsContext);
       return (
-        <React.Fragment>
+        <>
           <span>{`[${rowIndex},${index}]`}</span>
           <span style={{ marginLeft: 10 }}>
             {isSelected(rowIndex)
@@ -150,7 +150,7 @@ const columns = [
               ? "selectable"
               : "not selectable"}
           </span>
-        </React.Fragment>
+        </>
       );
     },
     style: { minWidth: "80px" },
@@ -187,7 +187,6 @@ const EnhanceTableBehaviour = () => {
         selection.clear();
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sorting.sortOrder]
   );
 
