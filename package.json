@@ -14,19 +14,19 @@
   "scripts": {
     "build": "rollup -c",
     "prebuild": "rm -rf dist && rm -rf styles",
-    "watch": "rollup -cw",
-    "prewatch": "yarn prebuild",
-    "prepare": "yarn build",
-    "postpublish": "(cd demo && yarn deploy) && (git push && git push --tags)"
+    "start": "rollup -cw",
+    "prestart": "npm run-script prebuild",
+    "prepare": "npm run-script build",
+    "postpublish": "(cd demo && npm run-script deploy) && (git push && git push --tags)"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.7.0",
-    "react": "link:demo/node_modules/react",
+    "react": "file:demo/node_modules/react",
     "rollup": "^1.16.7",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",

@@ -10,7 +10,7 @@ import { table, DefaultHeaderCellContentRenderer, DefaultHeaderCellRenderer } fr
 export const HeaderCellOverflowWrapper = ({children}) => (
     <div className="header-wrapper">
         <div className="header-positioner">
-            <div>
+            <div className="header-positioner-ellipsis">
                 { children }
             </div>
         </div>

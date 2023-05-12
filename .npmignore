@@ -2,7 +2,6 @@
 /test/
 /scripts/
 /src/
-/yarn.lock
 /.gitignore
 /docusaurus
 /demo

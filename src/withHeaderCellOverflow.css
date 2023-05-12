@@ -18,7 +18,7 @@ table > thead > tr > th > .header-wrapper .header-positioner {
     padding: var(--cell-padding);
 }
 
-table > thead > tr > th > .header-wrapper .header-positioner > div {
+table > thead > tr > th > .header-wrapper .header-positioner > .header-positioner-ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;

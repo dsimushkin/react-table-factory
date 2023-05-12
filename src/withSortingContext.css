@@ -14,6 +14,10 @@ table > thead > tr > th[class*="sorted"].sortable-column {
     text-decoration: underline;
 }
 
+table > thead > tr > th .sort-image {
+    display: none;
+}
+
 table > thead > tr > th[class*="sorted"] .sort-image {
     content: '';
     position: absolute;
