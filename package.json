@@ -17,7 +17,7 @@
     "start": "rollup -cw",
     "prestart": "npm run-script prebuild",
     "prepare": "npm run-script build",
-    "postpublish": "(cd demo && npm run-script deploy) && (git push && git push --tags)"
+    "postpublish": "(cd demo && npm run-script deploy) && (git push --atomic --follow-tags)"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
